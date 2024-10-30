@@ -1,4 +1,5 @@
 #include <iostream>
+#include <Vector3d.hpp>
 
 class Body {
 private:
@@ -19,6 +20,8 @@ public:
     double getVy() const { return vy; }
     double getVz() const { return vz; }
     double getMass() const { return mass; }
+    Vector3d getPosition() const { return Vector3d(x, y, z); }
+    Vector3d getVelocity() const { return Vector3d(vx, vy, vz); }
 
     // Setters
     void setX(double x) { this->x = x; }
