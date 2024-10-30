@@ -29,13 +29,6 @@ public:
     void setVz(double vz) { this->vz = vz; }
     void setMass(double mass) { this->mass = mass; }
 
-    // Method to update position based on velocity
-    void updatePosition(double time) {
-        x += vx * time;
-        y += vy * time;
-        z += vz * time;
-    }
-
     // Method to print the current state of the object
     void printState() const {
         std::cout << "Position: (" << x << ", " << y << ", " << z << ")\n";

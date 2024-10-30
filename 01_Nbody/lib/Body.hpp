@@ -31,9 +31,6 @@ public:
     void setVz(double vz);
     void setMass(double mass);
 
-    // Method to update position based on velocity
-    void updatePosition(double time);
-
     // Method to print the current state of the object
     void printState() const;
 };
