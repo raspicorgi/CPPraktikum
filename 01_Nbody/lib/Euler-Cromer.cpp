@@ -18,7 +18,6 @@ class euler_cromer : public Integrator {
                 new_current_body.setZ(current_body.getY() + new_current_body.getVz() * maxTimeStep);
                 newBodies.push_back(new_current_body);
             }
-            
             return newBodies;
         }
 

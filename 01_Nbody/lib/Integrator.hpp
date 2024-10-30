@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Body.hpp"
+#include <cmath>
 
 class Integrator{
 
