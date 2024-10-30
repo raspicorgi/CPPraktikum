@@ -8,7 +8,7 @@ class euler_cromer : public Integrator {
             
             for(Body current_body : *bodies)
             {
-                std::vector<double> accelaration = tools::calc_accelaration(*bodies,current_body);
+                std::vector<double> accelaration = tools::calc_acceleration(*bodies,current_body);
                 Body new_current_body = current_body;
                 new_current_body.setVx(current_body.getVx() +  accelaration[0]* maxTimeStep);
                 new_current_body.setVy(current_body.getVy() +  accelaration[1]* maxTimeStep);
