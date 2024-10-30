@@ -20,6 +20,8 @@ class Hermite : public Integrator {
                 Vector3d third_derivative_accelaration = (((initial_accelaration - predicted_accelaration)*(2)/(pow(maxTimeStep,3))) + ((initial_jerk-predicted_jerk)/(pow(maxTimeStep,2))))*6;
                 corrected_body.setVelocity(predicted_body.getVelocity() + second_derivative_accelaration *(1/6) * pow(maxTimeStep,3) + third_derivative_accelaration * (1/24) * pow(maxTimeStep,4));
                 corrected_body.setPosition(predicted_body.getPosition() + second_derivative_accelaration * (1/24) * pow(maxTimeStep,4) + third_derivative_accelaration * (1/120) * pow(maxTimeStep,5));
+                newBodies.push_back(corrected_body);
             }
+            return newBodies;
         }
 };
