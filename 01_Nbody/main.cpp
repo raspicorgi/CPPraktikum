@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "lib/Body.cpp"
+#include "lib/Vector3d.cpp"
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::vector<Body> bodies;
@@ -28,4 +29,12 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
+
+    // Test to add vectors
+    Vector3d v1(1, 2, 3);
+    Vector3d v2(4, 5, 6);
+    Vector3d v3 = v1 + v2;
+    v3 = v3 * 5;
+
+    std::cout << "(" << v3.getX() << ", " << v3.getY() << ", " << v3.getZ() << ")" << std::endl;
 }

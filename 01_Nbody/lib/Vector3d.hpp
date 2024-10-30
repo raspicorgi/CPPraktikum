@@ -7,6 +7,11 @@ public:
     Vector3d();
     Vector3d(double x, double y, double z);
 
+    // Getters
+    double getX() const { return x; }
+    double getY() const { return y; }
+    double getZ() const { return z; }
+
     // Member functions
     double magnitude() const;
     Vector3d normalize() const;
