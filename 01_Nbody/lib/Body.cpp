@@ -38,4 +38,11 @@ public:
         std::cout << "Velocity: (" << vx << ", " << vy << ", " << vz << ")\n";
         std::cout << "Mass: " << mass << "\n";
     }
+
+    int is_equal(Body other_body){
+        if(this->x == other_body.getX() && this->y == other_body.getY() && this->z == other_body.getZ() && this->vx == other_body.getVx() && this->vy == other_body.getVy() && this->vz == other_body.getVz() && this->mass == other_body.getMass()){
+            return 1;
+        }
+        return 0;
+    }
 };
