@@ -5,12 +5,17 @@ class Body {
 private:
     double x, y, z;       
     double vx, vy, vz;    
-    double mass;          
+    double mass;
+    Vector3d position;
+    Vector3d velocity;          
 
 public:
     // Constructor
     Body(double x, double y, double z, double vx, double vy, double vz, double mass)
         : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), mass(mass) {}
+
+    Body(Vector3d position, Vector3d velocity, double mass)
+        : position(position), velocity(velocity), mass(mass) {}
 
     // Getters
     double getX() const { return x; }
@@ -31,6 +36,8 @@ public:
     void setVy(double vy) { this->vy = vy; }
     void setVz(double vz) { this->vz = vz; }
     void setMass(double mass) { this->mass = mass; }
+    void setPosition(Vector3d position) { this->position = position; }
+    void setVelocity(Vector3d velocity) { this->velocity = velocity; }
 
     // Method to print the current state of the object
     void printState() const {

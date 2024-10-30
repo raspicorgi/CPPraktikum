@@ -6,7 +6,7 @@
 
 class tools{
 public:
-    static std::vector<double> calc_accelaration(std::vector<Body> bodies, Body current_body){
+    static std::vector<double> calc_acceleration(std::vector<Body> bodies, Body current_body){
         std::vector<double> accelaration;
         double a_x = 0;
         double a_y = 0;
@@ -27,6 +27,20 @@ public:
         accelaration.push_back(a_z);
         return accelaration;
     }
+
+    static Vector3d calc_acceleration_3dvec(std::vector<Body> bodies, Body current_body){
+        Vector3d acceleration;
+        for(Body other_body : bodies){
+            if(other_body.is_equal(current_body)){
+                continue;
+            }
+            Vector3d r = other_body.getPosition() - current_body.getPosition();
+            acceleration = acceleration + (r * (G * other_body.getMass()) / (pow(r.magnitude(), 3)));
+        }
+        
+        return acceleration;
+    }
+
     static std::vector<double> calc_jerk(std::vector<Body> bodies, Body current_body){
         std::vector<double> jerk;
         double j_x = 0;
@@ -49,6 +63,19 @@ public:
         jerk.push_back(j_x);
         jerk.push_back(j_y);
         jerk.push_back(j_z);
+        return jerk;
+    }
+
+    static Vector3d calc_jerk_3dvec(std::vector<Body> bodies, Body current_body){
+        Vector3d jerk;
+        for(Body other_body : bodies){
+            if(other_body.is_equal(current_body)){
+                continue;
+            }
+            Vector3d r = other_body.getPosition() - current_body.getPosition();
+            Vector3d v = other_body.getVelocity() - current_body.getVelocity();
+            jerk = jerk + (r * (G * other_body.getMass()) / (pow(r.magnitude(), 3))) - (v * (3 * G * other_body.getMass()) * (r.scalar_product(v)) / (pow(r.magnitude(), 5)));
+        }
         return jerk;
     }
 private:

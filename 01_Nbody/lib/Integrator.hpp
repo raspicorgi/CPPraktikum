@@ -4,6 +4,7 @@
 #include <vector>
 #include "Body.hpp"
 #include <cmath>
+#include "Vector3d.cpp"
 
 class Integrator{
 
