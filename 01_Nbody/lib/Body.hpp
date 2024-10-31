@@ -1,6 +1,5 @@
 #ifndef BODY_HPP
 #define BODY_HPP
-#include "Vector3d.hpp"
 #include <iostream>
 #include "Vector3d.hpp"
 

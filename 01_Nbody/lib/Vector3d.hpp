@@ -1,6 +1,7 @@
 #ifndef VECTOR3D_HPP
 #define VECTOR3D_HPP
 
+
 class Vector3d {
 public:
     // Constructors
