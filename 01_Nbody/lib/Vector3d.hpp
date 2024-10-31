@@ -24,6 +24,7 @@ public:
     double magnitude() const;
     Vector3d normalize() const;
     double scalar_product(Vector3d other) const;
+    Vector3d cross_product(Vector3d other) const;
 
     // Operator overloads
     Vector3d operator+(const Vector3d& other) const;
