@@ -1,5 +1,5 @@
 #include "Integrator.hpp"
-#include "Tools.cpp"
+#include "Tools.hpp"
 
 
 class Hermite : public Integrator {

@@ -1,6 +1,6 @@
 #include "Integrator.hpp"
-#include "Tools.cpp"
-#include "Body.cpp"
+#include "Tools.hpp"
+#include "Body.hpp"
 
 class Euler_Cromer : public Integrator {
     public:
