@@ -2,11 +2,8 @@
 #include "Tools.hpp"
 #include "Body.hpp"
 
-class Euler_Cromer : public Integrator {
-    public:
-        std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) override {
+        std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>* bodies, const double maxTimeStep){
             std::vector<Body> newBodies;
-            
             for(Body current_body : *bodies)
             {
                 std::vector<double> acceleration = Tools::calc_acceleration(*bodies,current_body);
@@ -20,7 +17,5 @@ class Euler_Cromer : public Integrator {
                 newBodies.push_back(new_current_body);
             }
             return newBodies;
-        }
-
-
-};
+        };
+        
