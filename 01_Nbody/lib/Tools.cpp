@@ -6,7 +6,7 @@
 
 
     std::vector<double> Tools::calc_acceleration(std::vector<Body> bodies, Body current_body){
-        std::vector<double> accelaration;
+        std::vector<double> acceleration;
         double a_x = 0;
         double a_y = 0;
         double a_z = 0;
@@ -21,10 +21,10 @@
             a_y = a_y + G * other_body.getMass() * (dy)/(pow(abs(dy),3));
             a_z = a_z + G * other_body.getMass() * (dz)/(pow(abs(dz),3));
         }
-        accelaration.push_back(a_x);
-        accelaration.push_back(a_y);
-        accelaration.push_back(a_z);
-        return accelaration;
+        acceleration.push_back(a_x);
+        acceleration.push_back(a_y);
+        acceleration.push_back(a_z);
+        return acceleration;
     }
 
     Vector3d Tools::calc_acceleration_3dvec(std::vector<Body> bodies, Body current_body){
