@@ -12,7 +12,7 @@ private:
 public:
     // Constructor
     Body(double x, double y, double z, double vx, double vy, double vz, double mass)
-        : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), mass(mass) {}
+        : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), position(Vector3d(x,y,z)), velocity(Vector3d(vx,vy,vz)), mass(mass) {}
 
     Body(Vector3d position, Vector3d velocity, double mass)
         : position(position), velocity(velocity), mass(mass) {}
