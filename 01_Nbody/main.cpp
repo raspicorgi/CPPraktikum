@@ -2,10 +2,10 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "lib/Body.cpp"
-#include "lib/Vector3d.cpp"
-#include "lib/Integrator.cpp"
-#include "lib/Euler_Cromer.cpp"
+#include "lib/Body.hpp"
+#include "lib/Vector3d.hpp"
+#include "lib/Integrator.hpp"
+//#include "lib/Euler_Cromer.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
@@ -32,11 +32,11 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
-    Euler_Cromer euler_cromer;
-    std::vector<Body> new_bodies = euler_cromer.integrate(&bodies, 0.01);  
-    for (const Body& body : new_bodies) {
-        body.printState();
-    }  
+    // Euler_Cromer euler_cromer;
+    // std::vector<Body> new_bodies = euler_cromer.integrate(&bodies, 0.01);  
+    // for (const Body& body : new_bodies) {
+    //     body.printState();
+    // }  
 
 /*
     // Test to add vectors

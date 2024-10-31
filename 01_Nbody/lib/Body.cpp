@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Vector3d.hpp"
+#include "Body.hpp"
 
 
     // Constructor
