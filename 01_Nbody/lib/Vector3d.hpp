@@ -1,5 +1,6 @@
 #ifndef VECTOR3D_HPP
 #define VECTOR3D_HPP
+
 #include <cmath>
 #include <vector>
 

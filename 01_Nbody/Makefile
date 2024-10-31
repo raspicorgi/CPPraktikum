@@ -6,13 +6,13 @@ CXXFLAGS = -std=c++11 -Wall
 
 # Source files
 SRC = main.cpp \
+      lib/Vector3d.cpp \
       lib/Body.cpp \
       lib/Euler_Cromer.cpp \
       lib/Euler.cpp \
       lib/Hermite.cpp \
       lib/Integrator.cpp \
       lib/Tools.cpp \
-      lib/Vector3d.cpp \
       lib/Velocity_Verlet.cpp
 
 # Object files

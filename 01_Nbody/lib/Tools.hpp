@@ -1,8 +1,6 @@
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
 #include "Body.hpp"
-#include "Vector3d.hpp"
-
 
 class Tools{
 public:

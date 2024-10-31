@@ -1,9 +1,8 @@
-#include <cmath>
+// Vector3d.cpp
 #include "Vector3d.hpp"
 
 // Constructors
 Vector3d::Vector3d() : x(0), y(0), z(0) {}
-
 Vector3d::Vector3d(double x, double y, double z) : x(x), y(y), z(z) {}
 
 // Getters
@@ -17,32 +16,12 @@ void Vector3d::setY(double y) { this->y = y; }
 void Vector3d::setZ(double z) { this->z = z; }
 
 // Member functions
-double Vector3d::magnitude() const {
-    return std::sqrt(x * x + y * y + z * z);
-}
-
-Vector3d Vector3d::normalize() const {
-    double mag = magnitude();
-    return Vector3d(x / mag, y / mag, z / mag);
-}
-
-double Vector3d::scalar_product(Vector3d other) const {
-    return (x * other.x + y * other.y + z * other.z);
-}
+double Vector3d::magnitude() const { return std::sqrt(x * x + y * y + z * z); }
+Vector3d Vector3d::normalize() const { double mag = magnitude(); return Vector3d(x / mag, y / mag, z / mag); }
+double Vector3d::scalar_product(Vector3d other) const { return (x * other.x + y * other.y + z * other.z); }
 
 // Operator overloads
-Vector3d Vector3d::operator+(const Vector3d& other) const {
-    return Vector3d(x + other.x, y + other.y, z + other.z);
-}
-
-Vector3d Vector3d::operator-(const Vector3d& other) const {
-    return Vector3d(x - other.x, y - other.y, z - other.z);
-}
-
-Vector3d Vector3d::operator*(double scalar) const {
-    return Vector3d(x * scalar, y * scalar, z * scalar);
-}
-
-Vector3d Vector3d::operator/(double scalar) const {
-    return Vector3d(x / scalar, y / scalar, z / scalar);
-}
+Vector3d Vector3d::operator+(const Vector3d& other) const { return Vector3d(x + other.x, y + other.y, z + other.z); }
+Vector3d Vector3d::operator-(const Vector3d& other) const { return Vector3d(x - other.x, y - other.y, z - other.z); }
+Vector3d Vector3d::operator*(double scalar) const { return Vector3d(x * scalar, y * scalar, z * scalar); }
+Vector3d Vector3d::operator/(double scalar) const { return Vector3d(x / scalar, y / scalar, z / scalar); }

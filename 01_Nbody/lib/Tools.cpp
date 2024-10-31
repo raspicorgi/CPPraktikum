@@ -1,8 +1,4 @@
-#include <iostream>
 #include "Tools.hpp"
-#include <vector>
-#include "Body.hpp"
-#include <cmath>
 
 
     std::vector<double> Tools::calc_acceleration(std::vector<Body> bodies, Body current_body){
