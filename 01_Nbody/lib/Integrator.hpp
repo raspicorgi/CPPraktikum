@@ -4,8 +4,6 @@
 #include <vector>
 #include "Body.hpp"
 #include <cmath>
-#include "Vector3d.hpp"
-#include "Tools.hpp"
 
 class Integrator{
 
