@@ -8,13 +8,13 @@ public:
     Vector3d(double x, double y, double z);
 
     // Getters
-    double getX() const { return x; }
-    double getY() const { return y; }
-    double getZ() const { return z; }
+    double getX() const;
+    double getY() const;
+    double getZ() const;
     // Setters
-    void setX(double x) { this->x = x; }
-    void setY(double y) { this->y = y; }
-    void setZ(double z) { this->z = z; }
+    void setX(double x);
+    void setY(double y);
+    void setZ(double z);
     // Member functions
     double magnitude() const;
     Vector3d normalize() const;

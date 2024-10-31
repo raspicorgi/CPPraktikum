@@ -1,12 +1,11 @@
 #include <iostream>
-#include "tools.hpp"
+#include "Tools.hpp"
 #include <vector>
 #include "Body.cpp"
 #include <cmath>
 
-class tools{
-public:
-    static std::vector<double> calc_acceleration(std::vector<Body> bodies, Body current_body){
+
+    std::vector<double> Tools::calc_acceleration(std::vector<Body> bodies, Body current_body){
         std::vector<double> accelaration;
         double a_x = 0;
         double a_y = 0;
@@ -28,7 +27,7 @@ public:
         return accelaration;
     }
 
-    static Vector3d calc_acceleration_3dvec(std::vector<Body> bodies, Body current_body){
+    Vector3d Tools::calc_acceleration_3dvec(std::vector<Body> bodies, Body current_body){
         Vector3d acceleration;
         for(Body other_body : bodies){
             if(other_body.is_equal(current_body)){
@@ -41,7 +40,7 @@ public:
         return acceleration;
     }
 
-    static std::vector<double> calc_jerk(std::vector<Body> bodies, Body current_body){
+    std::vector<double> Tools::calc_jerk(std::vector<Body> bodies, Body current_body){
         std::vector<double> jerk;
         double j_x = 0;
         double j_y = 0;
@@ -66,7 +65,7 @@ public:
         return jerk;
     }
 
-    static Vector3d calc_jerk_3dvec(std::vector<Body> bodies, Body current_body){
+    Vector3d Tools::calc_jerk_3dvec(std::vector<Body> bodies, Body current_body){
         Vector3d jerk;
         for(Body other_body : bodies){
             if(other_body.is_equal(current_body)){
@@ -78,6 +77,3 @@ public:
         }
         return jerk;
     }
-private:
-    const static double G = 6.67430e-11;
-};

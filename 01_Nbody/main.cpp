@@ -4,6 +4,9 @@
 #include <sstream>
 #include "lib/Body.cpp"
 #include "lib/Vector3d.cpp"
+#include "lib/Integrator.cpp"
+#include "lib/Euler_Cromer.cpp"
+
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::vector<Body> bodies;
@@ -29,7 +32,13 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
+    Euler_Cromer euler_cromer;
+    std::vector<Body> new_bodies = euler_cromer.integrate(&bodies, 0.01);  
+    for (const Body& body : new_bodies) {
+        body.printState();
+    }  
 
+/*
     // Test to add vectors
     Vector3d v1(1, 2, 3);
     Vector3d v2(4, 5, 6);
@@ -37,4 +46,5 @@ int main() {
     v3 = v3 * 5;
 
     std::cout << "(" << v3.getX() << ", " << v3.getY() << ", " << v3.getZ() << ")" << std::endl;
+    */
 }

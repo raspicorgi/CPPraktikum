@@ -1,7 +1,8 @@
 #include "Integrator.hpp"
 #include "tools.cpp"
+#include "Body.cpp"
 
-class euler_cromer : public Integrator {
+class Euler_Cromer : public Integrator {
     public:
         std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) override {
             std::vector<Body> newBodies;
