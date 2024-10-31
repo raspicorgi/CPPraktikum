@@ -2,6 +2,7 @@
 #define BODY_HPP
 
 #include <iostream>
+#include "Vector3d.hpp"
 
 class Body {
 private:
