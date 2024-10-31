@@ -9,10 +9,8 @@
 class Integrator{
 
 public:
-    virtual ~Integrator() = default;
-    virtual std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) = 0;
+    virtual ~Integrator();
+    virtual std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep);
 };
-
-
 
 #endif // INTEGRATOR_HPP

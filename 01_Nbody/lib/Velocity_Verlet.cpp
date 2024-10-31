@@ -1,5 +1,5 @@
 #include "Integrator.hpp"
-#include "Tools.cpp"
+#include "Tools.hpp"
 
 class Velocity_Verlet : public Integrator{
     public:

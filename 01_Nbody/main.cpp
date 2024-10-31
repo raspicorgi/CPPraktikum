@@ -3,7 +3,6 @@
 #include <fstream>
 #include <sstream>
 #include "lib/Body.cpp"
-#include "lib/Vector3d.cpp"
 #include "lib/Integrator.cpp"
 #include "lib/Euler_Cromer.cpp"
 

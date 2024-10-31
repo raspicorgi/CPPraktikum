@@ -12,7 +12,7 @@ public:
       static Vector3d calc_acceleration_3dvec(std::vector<Body> bodies, Body current_body);
       static Vector3d calc_jerk_3dvec(std::vector<Body> bodies, Body current_body);
 private:
-    const static double G = 1;
+    constexpr static double G = 1;
 };
 
 #endif // TOOLS_HPP

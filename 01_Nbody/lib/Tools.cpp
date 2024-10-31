@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Tools.hpp"
 #include <vector>
-#include "Body.cpp"
+#include "Body.hpp"
 #include <cmath>
 
 
