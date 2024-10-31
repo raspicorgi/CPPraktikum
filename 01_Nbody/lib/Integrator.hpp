@@ -3,13 +3,12 @@
 
 #include <vector>
 #include "Body.hpp"
-#include <cmath>
 
-class Integrator{
+class Integrator {
 
 public:
-    virtual ~Integrator();
-    virtual std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep);
+    virtual ~Integrator() = default;
+    virtual std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) = 0;
 };
 
 #endif // INTEGRATOR_HPP
