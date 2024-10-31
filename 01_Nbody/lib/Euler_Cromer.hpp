@@ -1,6 +1,8 @@
 #ifndef EULER_CROMER_HPP
 #define EULER_CROMER_HPP
 #include "Integrator.hpp"
+#include "Tools.hpp"
+#include "Body.hpp"
 
 class Euler_Cromer : public Integrator{
     public:
