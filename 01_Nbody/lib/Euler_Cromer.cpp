@@ -1,5 +1,5 @@
 #include "Integrator.hpp"
-#include "tools.cpp"
+#include "Tools.cpp"
 #include "Body.cpp"
 
 class Euler_Cromer : public Integrator {
@@ -9,7 +9,7 @@ class Euler_Cromer : public Integrator {
             
             for(Body current_body : *bodies)
             {
-                std::vector<double> accelaration = tools::calc_acceleration(*bodies,current_body);
+                std::vector<double> accelaration = Tools::calc_acceleration(*bodies,current_body);
                 Body new_current_body = current_body;
                 new_current_body.setVx(current_body.getVx() +  accelaration[0]* maxTimeStep);
                 new_current_body.setVy(current_body.getVy() +  accelaration[1]* maxTimeStep);
