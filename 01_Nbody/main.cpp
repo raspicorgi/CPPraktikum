@@ -1,10 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <fstream>
 #include <sstream>
-#include "lib/Body.hpp"
-#include "lib/Integrator.hpp"
-//#include "lib/Euler_Cromer.hpp"
+#include "lib/Euler_Cromer.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {

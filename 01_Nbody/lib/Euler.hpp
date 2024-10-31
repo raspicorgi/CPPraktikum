@@ -1,10 +1,10 @@
-#ifndef EULER_CROMER_HPP
-#define EULER_CROMER_HPP
+#ifndef EULER_HPP
+#define EULER_HPP
 #include "Integrator.hpp"
 
 
-class Euler_Cromer : public Integrator{
+class Euler : public Integrator{
     public:
     std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) override;
 };
-#endif // EULER_CROMER_HPP
+#endif // EULER_HPP

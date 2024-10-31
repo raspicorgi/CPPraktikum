@@ -1,9 +1,6 @@
-#include "Integrator.hpp"
-#include "Tools.hpp"
+#include "Velocity_Verlet.hpp"
 
-class Velocity_Verlet : public Integrator{
-    public:
-        std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) override {
+        std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep){
             std::vector<Body> new_bodies;
             for(Body current_body : *bodies){
                 Body new_current_body = current_body;
@@ -19,4 +16,3 @@ class Velocity_Verlet : public Integrator{
             } 
             return new_bodies;
         }
-};

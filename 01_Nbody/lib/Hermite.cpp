@@ -1,10 +1,6 @@
-#include "Integrator.hpp"
-#include "Tools.hpp"
+#include "Hermite.hpp"
 
-
-class Hermite : public Integrator {
-    public:
-         std::vector<Body> integrate(const std::vector<Body>* bodies, const double maxTimeStep) override {
+         std::vector<Body> Hermite::integrate(const std::vector<Body>* bodies, const double maxTimeStep){
             std::vector<Body> newBodies;
             for(Body current_body : *bodies)
             {
@@ -24,4 +20,3 @@ class Hermite : public Integrator {
             }
             return newBodies;
         }
-};

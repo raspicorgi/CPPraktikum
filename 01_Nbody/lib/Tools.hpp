@@ -1,9 +1,7 @@
 #ifndef TOOLS_HPP
 #define TOOLS_HPP
-#include <vector>
 #include "Body.hpp"
-#include "Vector3d.hpp"
-#include <cmath>
+
 
 class Tools{
 public:

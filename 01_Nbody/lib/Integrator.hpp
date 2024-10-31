@@ -1,8 +1,6 @@
 #ifndef INTEGRATOR_HPP
 #define INTEGRATOR_HPP
-
-#include <vector>
-#include "Body.hpp"
+#include "Tools.hpp"
 
 class Integrator {
 
