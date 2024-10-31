@@ -11,20 +11,22 @@ public:
     double getX() const;
     double getY() const;
     double getZ() const;
+
     // Setters
     void setX(double x);
     void setY(double y);
     void setZ(double z);
+
     // Member functions
     double magnitude() const;
     Vector3d normalize() const;
     double scalar_product(Vector3d other) const;
+
     // Operator overloads
     Vector3d operator+(const Vector3d& other) const;
     Vector3d operator-(const Vector3d& other) const;
     Vector3d operator*(double scalar) const;
     Vector3d operator/(double scalar) const;
-    
 
 private:
     double x, y, z;
