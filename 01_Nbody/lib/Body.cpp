@@ -2,6 +2,9 @@
 #include "Body.hpp"
 
 
+
+    // default constructor
+    Body::Body() : x(0), y(0), z(0), vx(0), vy(0), vz(0), position(Vector3d(0,0,0)), velocity(Vector3d(0,0,0)), mass(0) {}
     // Constructor
     Body::Body(double x, double y, double z, double vx, double vy, double vz, double mass)
         : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), position(Vector3d(x,y,z)), velocity(Vector3d(vx,vy,vz)), mass(mass) {}

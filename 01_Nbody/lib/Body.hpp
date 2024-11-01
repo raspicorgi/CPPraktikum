@@ -12,6 +12,8 @@ private:
     Vector3d velocity;          
 
 public:
+    // default constructor
+    Body();
     // Constructor
     Body(double x, double y, double z, double vx, double vy, double vz, double mass);
     // Getters
