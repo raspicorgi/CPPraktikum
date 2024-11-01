@@ -23,7 +23,7 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     return bodies;
 }
 
-void normalizeMasses(std::vector<Body> bodies) {
+void normalizeMasses(std::vector<Body>& bodies) {
     double totalMass = 0;
     for (const Body& body : bodies) {
         totalMass += body.getMass();
@@ -34,16 +34,44 @@ void normalizeMasses(std::vector<Body> bodies) {
     }
 }
 
+void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
+    // calculate center of mass
+    Vector3d centerOfMass;
+    for (const Body& body : bodies) {
+        centerOfMass += body.getPosition() * body.getMass();
+    }
+    
+
+    // offset all bodies
+    for (Body& body : bodies) {
+        body.setPosition(body.getPosition() - centerOfMass);
+    }
+
+    // calculate velocity of COM
+    Vector3d centerOfMassVelocity;
+    for (const Body& body : bodies) {
+        centerOfMassVelocity += body.getVelocity() * body.getMass();
+    }
+
+    // offset body velocity
+    for (Body& body : bodies) {
+        body.setVelocity(body.getVelocity() - centerOfMassVelocity);
+    }
+
+}
+
 
 int main() {
     //Load data
     
-    std::cout << "Loading data...";
+    std::cout << "Loading data... ";
     std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
-    std::cout << " Data loaded." << std::endl;
-    std::cout << "Normalizing masses...";
+    std::cout << "Data loaded." << std::endl;
+    std::cout << "Normalizing masses... ";
     normalizeMasses(bodies);
-    std::cout << " Masses normalized." << std::endl;
+    std::cout << "Converting to COM system... ";
+    convertToCenterOfMassSystem(bodies);
+    std::cout << "Preprocessing complete." << std::endl;
     for (const Body& body : bodies) {
         body.printState();
     }

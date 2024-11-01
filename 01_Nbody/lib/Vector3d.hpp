@@ -32,6 +32,7 @@ public:
     Vector3d operator-(const Vector3d& other) const;
     Vector3d operator*(double scalar) const;
     Vector3d operator/(double scalar) const;
+    Vector3d operator+=(const Vector3d& other);
 
 private:
     double x, y, z;
