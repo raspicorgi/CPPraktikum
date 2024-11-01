@@ -23,12 +23,27 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     return bodies;
 }
 
+void normalizeMasses(std::vector<Body> bodies) {
+    double totalMass = 0;
+    for (const Body& body : bodies) {
+        totalMass += body.getMass();
+    }
+
+    for (Body& body : bodies) {
+        body.setMass(body.getMass() / totalMass);
+    }
+}
+
+
 int main() {
     //Load data
     
-    std::cout << "Loading data..." << std::endl;
+    std::cout << "Loading data...";
     std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
-    std::cout << "Data loaded." << std::endl;
+    std::cout << " Data loaded." << std::endl;
+    std::cout << "Normalizing masses...";
+    normalizeMasses(bodies);
+    std::cout << " Masses normalized." << std::endl;
     for (const Body& body : bodies) {
         body.printState();
     }
