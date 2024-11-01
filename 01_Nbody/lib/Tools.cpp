@@ -18,9 +18,9 @@
 
     
 
-    Vector3d Tools::calc_jerk(std::vector<Body> bodies, Body current_body){
+    Vector3d Tools::calc_jerk(const std::vector<Body>& bodies, Body current_body){
         Vector3d jerk;
-        for(Body other_body : bodies){
+        for(const Body& other_body : bodies){
             if(other_body.is_equal(current_body)){
                 continue;
             }
