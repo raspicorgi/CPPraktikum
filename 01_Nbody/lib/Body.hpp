@@ -7,9 +7,7 @@ class Body {
 private:
     double x, y, z;   
     double vx, vy, vz;
-    double mass;
-    Vector3d position;
-    Vector3d velocity;          
+    double mass;        
 
 public:
     // default constructor

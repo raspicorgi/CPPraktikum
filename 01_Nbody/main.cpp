@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include "lib/Euler_Cromer.hpp"
+#include "lib/Euler.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
@@ -29,7 +30,7 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
-    std::vector<Body> newBodies = Euler_Cromer().integrate(&bodies, 0.01);
+    std::vector<Body> newBodies = Euler().integrate(bodies, 0.01);
     for (const Body& body : newBodies) {
         body.printState();
     }

@@ -4,10 +4,10 @@
 
 
     // default constructor
-    Body::Body() : x(0), y(0), z(0), vx(0), vy(0), vz(0), position(Vector3d(0,0,0)), velocity(Vector3d(0,0,0)), mass(0) {}
+    Body::Body() : x(0), y(0), z(0), vx(0), vy(0), vz(0), mass(0) {}
     // Constructor
     Body::Body(double x, double y, double z, double vx, double vy, double vz, double mass)
-        : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), position(Vector3d(x,y,z)), velocity(Vector3d(vx,vy,vz)), mass(mass) {}
+        : x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), mass(mass) {}
 
     // Getters
     double Body::getX() const { return x; }
@@ -28,8 +28,16 @@
     void Body::setVy(double vy) { this->vy = vy; }
     void Body::setVz(double vz) { this->vz = vz; }
     void Body::setMass(double mass) { this->mass = mass; }
-    void Body::setPosition(Vector3d position) { this->position = position; }
-    void Body::setVelocity(Vector3d velocity) { this->velocity = velocity; }
+    void Body::setPosition(Vector3d position) {
+        this-> x = position.getX();
+        this-> y = position.getY();
+        this-> z = position.getZ();
+    }
+    void Body::setVelocity(Vector3d velocity) {
+        this->vx = velocity.getX();
+        this->vy = velocity.getY();
+        this->vz = velocity.getZ();
+    }
 
     // Method to print the current state of the object
     void Body::printState() const {
