@@ -62,8 +62,11 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 
 int main() {
+    //prefs
+    int iterations = 1000;
+    double maxTimeStep = 0.01;
+
     //Load data
-    
     std::cout << "Loading data... ";
     std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
     std::cout << "Data loaded." << std::endl;
@@ -72,13 +75,19 @@ int main() {
     std::cout << "Converting to COM system... ";
     convertToCenterOfMassSystem(bodies);
     std::cout << "Preprocessing complete." << std::endl;
-    for (const Body& body : bodies) {
-        body.printState();
-    }
-    std::vector<Body> newBodies;
-    newBodies = Euler().integrate(bodies, 0.01);
-    for (const Body& body : newBodies) {
-        body.printState();
+    // for (const Body& body : bodies) {
+    //     body.printState();
+    // }
+
+    // main loop
+    for (int i = 1; i < iterations; i++) {
+        std::vector<Body> newBodies;
+        newBodies = Euler().integrate(bodies, maxTimeStep);
+        // for (const Body& body : newBodies) {
+        //     body.printState();
+        // }
+        std::cout << "Iteration " << i << "/" << iterations << std::endl;
+        bodies = newBodies;
     }
    
  
