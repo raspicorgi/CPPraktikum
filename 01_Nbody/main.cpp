@@ -47,9 +47,7 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
-    std::cout << "hier" << std::endl;
     std::vector<Body> newBodies;
-    std::cout << "hier2" << std::endl;
     newBodies = Euler().integrate(bodies, 0.01);
     for (const Body& body : newBodies) {
         body.printState();
