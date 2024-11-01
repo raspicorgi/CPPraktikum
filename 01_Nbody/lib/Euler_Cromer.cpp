@@ -1,11 +1,11 @@
 
 #include "Euler_Cromer.hpp"
 
-        std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>* bodies, const double maxTimeStep) {
+        std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>& bodies, const double maxTimeStep) {
             std::vector<Body> newBodies;
-            for(Body current_body : *bodies)
+            for(const Body current_body : bodies)
             {
-                Vector3d acceleration = Tools::calc_acceleration(*bodies,current_body);
+                Vector3d acceleration = Tools::calc_acceleration(bodies, current_body);
                 Body new_current_body = current_body;
                 new_current_body.setVx(current_body.getVx() +  acceleration.getX()* maxTimeStep);
                 new_current_body.setVy(current_body.getVy() +  acceleration.getY()* maxTimeStep);

@@ -3,9 +3,9 @@
 
     
 
-    Vector3d Tools::calc_acceleration(std::vector<Body> bodies, Body current_body){
+    Vector3d Tools::calc_acceleration(const std::vector<Body>& bodies, Body current_body){
         Vector3d acceleration;
-        for(Body other_body : bodies){
+        for(const Body other_body : bodies){
             if(other_body.is_equal(current_body)){
                 continue;
             }

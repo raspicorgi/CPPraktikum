@@ -10,12 +10,14 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
 
+    int count = 0;
     while (std::getline(file, line)) {
         std::istringstream iss(line);
         double x, y, z, vx, vy, vz, mass;
         if (iss >> x >> y >> z >> vx >> vy >> vz >> mass) {
-            bodies.emplace_back(x, y, z, vx, vy, vz, mass);
+            bodies.emplace_back(count, x, y, z, vx, vy, vz, mass);
         }
+        count++;
     }
 
     return bodies;
@@ -30,7 +32,10 @@ int main() {
     for (const Body& body : bodies) {
         body.printState();
     }
-    std::vector<Body> newBodies = Euler().integrate(bodies, 0.01);
+    std::cout << "hier" << std::endl;
+    std::vector<Body> newBodies;
+    std::cout << "hier2" << std::endl;
+    newBodies = Euler().integrate(bodies, 0.01);
     for (const Body& body : newBodies) {
         body.printState();
     }
