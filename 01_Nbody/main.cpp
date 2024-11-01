@@ -22,14 +22,21 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
 
 int main() {
     //Load data
+    /*
     std::cout << "Loading data..." << std::endl;
     std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
     std::cout << "Data loaded." << std::endl;
     for (const Body& body : bodies) {
         body.printState();
     }
-    // Euler_Cromer euler_cromer;
-    // std::vector<Body> new_bodies = euler_cromer.integrate(&bodies, 0.01);  
+    */
+    Body body1(1.0,2.0,3.0,4.0,5.0,6.0,100.0);
+    Body body2(1,2,3,4,5,6,100);
+    std::vector<Body> bodies;
+    bodies.push_back(body1);
+    bodies.push_back(body2);
+    Euler_Cromer euler_cromer;
+    std::vector<Body> new_bodies = euler_cromer.integrate(&bodies, 0.01);  
     // for (const Body& body : new_bodies) {
     //     body.printState();
     // }  
