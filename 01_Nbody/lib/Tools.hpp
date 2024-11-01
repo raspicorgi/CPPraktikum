@@ -2,7 +2,6 @@
 #define TOOLS_HPP
 #include "Body.hpp"
 
-
 class Tools{
 public:
       static std::vector<double> calc_acceleration(std::vector<Body> bodies, Body current_body);

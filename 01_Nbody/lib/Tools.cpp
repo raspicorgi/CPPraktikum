@@ -1,7 +1,6 @@
 #include "Tools.hpp"
 
 
-
     std::vector<double> Tools::calc_acceleration(std::vector<Body> bodies, Body current_body){
         std::vector<double> acceleration;
         double a_x = 0;
