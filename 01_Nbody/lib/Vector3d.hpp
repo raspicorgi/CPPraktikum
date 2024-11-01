@@ -20,6 +20,7 @@ public:
     void setY(double y);
     void setZ(double z);
 
+
     // Member functions
     double magnitude() const;
     Vector3d normalize() const;
