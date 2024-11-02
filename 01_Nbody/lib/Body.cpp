@@ -7,6 +7,8 @@
     Body::Body() : id(-1), x(0), y(0), z(0), vx(0), vy(0), vz(0), mass(0) {}
     //id constructor
     Body::Body(int id) : id(id), x(0), y(0), z(0), vx(0), vy(0), vz(0), mass(0) {}
+    // id and mass constructor
+    Body::Body(int id, long double mass) : id(id), x(0), y(0), z(0), vx(0), vy(0), vz(0), mass(mass) {}
     // Constructor
     Body::Body(int id, long double x, long double y, long double z, long double vx, long double vy, long double vz, long double mass)
         : id(id), x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), mass(mass) {}
@@ -45,9 +47,9 @@
 
     // Method to print the current state of the object
     void Body::printState() const {
-        std::cout << "Body ID: " << id << "\n";
-        std::cout << "Position: (" << x << ", " << y << ", " << z << ")\n";
-        std::cout << "Velocity: (" << vx << ", " << vy << ", " << vz << ")\n";
+        std::cout << "Body ID: " << id << ", ";
+        std::cout << "Position: (" << x << ", " << y << ", " << z << "), ";
+        std::cout << "Velocity: (" << vx << ", " << vy << ", " << vz << "), ";
         std::cout << "Mass: " << mass << "\n";
     }
 

@@ -67,7 +67,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 1;
+    int iterations = 2;
     long double maxTimeStep = 0.01;
 
     //Load data
