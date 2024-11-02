@@ -3,6 +3,9 @@
 #include <sstream>
 #include "lib/Euler_Cromer.hpp"
 #include "lib/Euler.hpp"
+#include "lib/Velocity_Verlet.hpp"
+#include "lib/Hermite.hpp"
+#include "lib/Iterierter_Hermite.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
