@@ -31,6 +31,7 @@ std::vector<Body> Velocity_Verlet::integrate(const std::vector<Body>& bodies, co
         Vector3d acceleration = Tools::calc_acceleration(bodies, body);
         Vector3d new_position = body.getPosition() + body.getVelocity() * maxTimeStep + acceleration * 0.5 * pow(maxTimeStep, 2);
         newBody.setPosition(new_position);
+        newBody.setVelocity(body.getVelocity()); // copy v_n so that we can calculate a_n in the loop below
         new_bodies.push_back(newBody);
     }
 
