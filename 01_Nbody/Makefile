@@ -2,18 +2,8 @@
 CXX = g++
 # Compiler flags
 CXXFLAGS = -std=c++11 -Wall
-# Source files
-SRC = main.cpp \
-      lib/Vector3d.cpp \
-      lib/Body.cpp \
-      lib/Euler_Cromer.cpp \
-      lib/Euler.cpp \
-      lib/Hermite.cpp \
-      lib/Integrator.cpp \
-      lib/Tools.cpp \
-      lib/Velocity_Verlet.cpp \
-      lib/RK4.cpp \
-      lib/Iterierter_Hermite.cpp
+# Source files: main.cpp and all .cpp files in lib
+SRC = main.cpp $(wildcard lib/*.cpp)
 # Build directory
 BUILD_DIR = build
 # Object files
