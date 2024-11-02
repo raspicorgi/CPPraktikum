@@ -11,7 +11,9 @@ SRC = main.cpp \
       lib/Hermite.cpp \
       lib/Integrator.cpp \
       lib/Tools.cpp \
-      lib/Velocity_Verlet.cpp
+      lib/Velocity_Verlet.cpp \
+      lib/RK4.cpp \
+      lib/Iterierter_Hermite.cpp
 # Build directory
 BUILD_DIR = build
 # Object files

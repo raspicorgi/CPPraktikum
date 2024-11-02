@@ -6,6 +6,7 @@
 #include "lib/Velocity_Verlet.hpp"
 #include "lib/Hermite.hpp"
 #include "lib/Iterierter_Hermite.hpp"
+#include "lib/RK4.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
@@ -66,7 +67,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 1000;
+    int iterations = 628;
     double maxTimeStep = 0.01;
 
     //Load data
@@ -83,16 +84,22 @@ int main() {
     // }
 
     // main loop
-    for (int i = 1; i < iterations; i++) {
-        std::vector<Body> newBodies;
-        newBodies = Euler().integrate(bodies, maxTimeStep);
+    std::vector<Body> newBodies;
+    for (int i = 1; i <= iterations; i++) {
+        newBodies = RK4().integrate(bodies, maxTimeStep);
         // for (const Body& body : newBodies) {
         //     body.printState();
         // }
         std::cout << "Iteration " << i << "/" << iterations << std::endl;
         bodies = newBodies;
     }
-   
- 
+    std::cout << "Simulation complete." << std::endl;
+    for (const Body& body : bodies) {
+        body.printState();
+    }
+    for (const Body& body : newBodies) {
+        body.printState();
+    }
+    
     
 }
