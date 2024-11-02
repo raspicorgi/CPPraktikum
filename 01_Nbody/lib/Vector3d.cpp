@@ -1,4 +1,5 @@
 #include "Vector3d.hpp"
+#include <ostream>
 
 // Constructors
 Vector3d::Vector3d() : x(0), y(0), z(0) {}
@@ -44,3 +45,8 @@ Vector3d Vector3d::operator-(const Vector3d& other) const { return Vector3d(x - 
 Vector3d Vector3d::operator*(long double scalar) const { return Vector3d(x * scalar, y * scalar, z * scalar); }
 Vector3d Vector3d::operator/(long double scalar) const { return Vector3d(x / scalar, y / scalar, z / scalar); }
 Vector3d Vector3d::operator+=(const Vector3d& other) { x += other.x; y += other.y; z += other.z; return *this; }
+
+std::ostream& operator<<(std::ostream& os, const Vector3d& vector) {
+    os << "(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
+    return os;
+}

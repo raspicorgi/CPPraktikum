@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <vector>
+#include <ostream>
 
 class Vector3d {
 public:
@@ -33,6 +34,9 @@ public:
     Vector3d operator*(long double scalar) const;
     Vector3d operator/(long double scalar) const;
     Vector3d operator+=(const Vector3d& other);
+    Vector3d operator<<(std::ostream& os) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Vector3d& vector);
 
 private:
     long double x;
