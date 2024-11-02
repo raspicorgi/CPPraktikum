@@ -9,7 +9,7 @@ private:
     int id;
     long double x, y, z;   
     long double vx, vy, vz;
-    long double mass;        
+    long double mass;
 
 public:
     /**
@@ -17,6 +17,13 @@ public:
      * Initializes all member variables to default values.
      */
     Body();
+
+    /**
+     * @brief Constructor for the Body class that initializes the body with a given id and mass.
+     * @param id The unique identifier for the body.
+     * @param mass The mass of the body.
+     */
+    Body(int id, long double mass);
 
     /**
      * @brief Constructor for the Body class that initializes the body with a given id.

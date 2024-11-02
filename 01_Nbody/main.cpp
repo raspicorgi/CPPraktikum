@@ -67,7 +67,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 1;
+    int iterations = 10;
     long double maxTimeStep = 0.01;
 
     //Load data
@@ -83,6 +83,10 @@ int main() {
     //     body.printState();
     // }
 
+
+    for (const Body& body : bodies) {
+        body.printState();
+    }
     // main loop
     std::vector<Body> newBodies;
     for (int i = 1; i <= iterations; i++) {
@@ -94,9 +98,6 @@ int main() {
         bodies = newBodies;
     }
     std::cout << "Simulation complete." << std::endl;
-    for (const Body& body : bodies) {
-        body.printState();
-    }
     for (const Body& body : newBodies) {
         body.printState();
     }
