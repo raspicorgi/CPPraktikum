@@ -1,6 +1,6 @@
 #include "Velocity_Verlet.hpp"
 
-        std::vector<Body> Velocity_Verlet::integrate(const std::vector<Body>& bodies, const double maxTimeStep){
+        std::vector<Body> Velocity_Verlet::integrate(const std::vector<Body>& bodies, const long double maxTimeStep){
             std::vector<Body> new_bodies;
             for(Body current_body : bodies){
                 Body new_current_body = current_body;

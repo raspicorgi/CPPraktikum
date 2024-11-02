@@ -1,6 +1,6 @@
 #include "Hermite.hpp"
 
-         std::vector<Body> Hermite::integrate(const std::vector<Body>& bodies, const double maxTimeStep){
+         std::vector<Body> Hermite::integrate(const std::vector<Body>& bodies, const long double maxTimeStep){
             std::vector<Body> newBodies;
             for(const Body& current_body : bodies)
             {

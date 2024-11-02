@@ -4,7 +4,7 @@
 
 class Iterierter_Hermite : public Integrator {
     public:
-        std::vector<Body> integrate(const std::vector<Body>& bodies, const double maxTimeStep) override;
+        std::vector<Body> integrate(const std::vector<Body>& bodies, const long double maxTimeStep) override;
 };
 
 #endif // ITERIERTER_HERMITE_HPP

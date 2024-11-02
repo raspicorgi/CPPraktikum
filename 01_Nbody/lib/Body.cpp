@@ -8,7 +8,7 @@
     //id constructor
     Body::Body(int id) : id(id), x(0), y(0), z(0), vx(0), vy(0), vz(0), mass(0) {}
     // Constructor
-    Body::Body(int id, double x, double y, double z, double vx, double vy, double vz, double mass)
+    Body::Body(int id, long double x, long double y, long double z, long double vx, long double vy, long double vz, long double mass)
         : id(id), x(x), y(y), z(z), vx(vx), vy(vy), vz(vz), mass(mass) {}
 
     // Getters
@@ -24,13 +24,13 @@
     int Body::getId() const { return id; }
 
     // Setters
-    void Body::setX(double x) { this->x = x; }
-    void Body::setY(double y) { this->y = y; }
-    void Body::setZ(double z) { this->z = z; }
-    void Body::setVx(double vx) { this->vx = vx; }
-    void Body::setVy(double vy) { this->vy = vy; }
-    void Body::setVz(double vz) { this->vz = vz; }
-    void Body::setMass(double mass) { this->mass = mass; }
+    void Body::setX(long double x) { this->x = x; }
+    void Body::setY(long double y) { this->y = y; }
+    void Body::setZ(long double z) { this->z = z; }
+    void Body::setVx(long double vx) { this->vx = vx; }
+    void Body::setVy(long double vy) { this->vy = vy; }
+    void Body::setVz(long double vz) { this->vz = vz; }
+    void Body::setMass(long double mass) { this->mass = mass; }
     void Body::setPosition(Vector3d position) {
         this-> x = position.getX();
         this-> y = position.getY();

@@ -7,9 +7,9 @@
 class Body {
 private:
     int id;
-    double x, y, z;   
-    double vx, vy, vz;
-    double mass;        
+    long double x, y, z;   
+    long double vx, vy, vz;
+    long double mass;        
 
 public:
     /**
@@ -35,7 +35,7 @@ public:
      * @param vz The initial velocity of the body along the z-axis.
      * @param mass The mass of the body.
      */
-    Body(int id, double x, double y, double z, double vx, double vy, double vz, double mass);
+    Body(int id, long double x, long double y, long double z, long double vx, long double vy, long double vz, long double mass);
     // Getters
     double getX() const;
     double getY() const;
@@ -50,13 +50,13 @@ public:
 
 
     // Setters
-    void setX(double x);
-    void setY(double y);
-    void setZ(double z);
-    void setVx(double vx);
-    void setVy(double vy);
-    void setVz(double vz);
-    void setMass(double mass);
+    void setX(long double x);
+    void setY(long double y);
+    void setZ(long double z);
+    void setVx(long double vx);
+    void setVy(long double vy);
+    void setVz(long double vz);
+    void setMass(long double mass);
     void setPosition(Vector3d position);
     void setVelocity(Vector3d velocity);
     // Method to print the current state of the object

@@ -8,7 +8,7 @@ public:
       static Vector3d calc_acceleration(const std::vector<Body>& bodies, Body current_body);
       static Vector3d calc_jerk(const std::vector<Body>& bodies, Body current_body);
 private:
-    constexpr static double G = 1;
+    constexpr static long double G = 1;
 };
 
 #endif // TOOLS_HPP

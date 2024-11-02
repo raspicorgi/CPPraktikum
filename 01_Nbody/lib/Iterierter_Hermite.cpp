@@ -1,6 +1,6 @@
 #include "Iterierter_Hermite.hpp"
 
-std::vector<Body> Iterierter_Hermite::integrate(const std::vector<Body>& bodies, const double maxTimeStep){
+std::vector<Body> Iterierter_Hermite::integrate(const std::vector<Body>& bodies, const long double maxTimeStep){
     std::vector<Body> newBodies;
     for (const Body& current_body : bodies) {
        Body predicted_body = current_body;

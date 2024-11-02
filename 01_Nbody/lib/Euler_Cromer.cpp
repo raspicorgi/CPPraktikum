@@ -1,7 +1,7 @@
 
 #include "Euler_Cromer.hpp"
 
-        std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>& bodies, const double maxTimeStep) {
+        std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>& bodies, const long double maxTimeStep) {
             std::vector<Body> newBodies;
             for(const Body current_body : bodies)
             {

@@ -1,6 +1,6 @@
 #include "RK4.hpp"
 
-std::vector<Body> RK4::integrate(const std::vector<Body>& Bodies, const double maxTimeStep){
+std::vector<Body> RK4::integrate(const std::vector<Body>& Bodies, const long double maxTimeStep){
     std::vector<Body> new_Bodies;
     for(const Body& current_body : Bodies){
         Body new_current_body = current_body;

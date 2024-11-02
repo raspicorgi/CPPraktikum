@@ -28,7 +28,7 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
 }
 
 void normalizeMasses(std::vector<Body>& bodies) {
-    double totalMass = 0;
+    long double totalMass = 0;
     for (const Body& body : bodies) {
         totalMass += body.getMass();
     }
@@ -67,8 +67,8 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 628;
-    double maxTimeStep = 0.01;
+    int iterations = 1;
+    long double maxTimeStep = 0.01;
 
     //Load data
     std::cout << "Loading data... ";
@@ -86,7 +86,7 @@ int main() {
     // main loop
     std::vector<Body> newBodies;
     for (int i = 1; i <= iterations; i++) {
-        newBodies = RK4().integrate(bodies, maxTimeStep);
+        newBodies = Velocity_Verlet().integrate(bodies, maxTimeStep);
         // for (const Body& body : newBodies) {
         //     body.printState();
         // }

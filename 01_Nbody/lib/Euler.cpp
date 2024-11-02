@@ -1,6 +1,6 @@
 #include "Euler.hpp"
 
-    std::vector<Body> Euler::integrate(const std::vector<Body>& bodies, const double maxTimeStep){
+    std::vector<Body> Euler::integrate(const std::vector<Body>& bodies, const long double maxTimeStep){
         std::vector<Body> newBodies;
         for (const Body& body : bodies) {
             Body newBody(body.getId());
