@@ -67,7 +67,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 1;
+    int iterations = 628;
     long double maxTimeStep = 0.01;
 
     //Load data
@@ -90,7 +90,7 @@ int main() {
     // main loop
     std::vector<Body> newBodies;
     for (int i = 1; i <= iterations; i++) {
-        newBodies = Velocity_Verlet().integrate(bodies, maxTimeStep);
+        newBodies = Iterierter_Hermite().integrate(bodies, maxTimeStep);
         // for (const Body& body : newBodies) {
         //     body.printState();
         // }
@@ -101,6 +101,7 @@ int main() {
     for (const Body& body : newBodies) {
         body.printState();
     }
+    
     
     
 }
