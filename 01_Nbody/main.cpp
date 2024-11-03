@@ -90,7 +90,7 @@ int main() {
     // main loop
     std::vector<Body> newBodies;
     for (int i = 1; i <= iterations; i++) {
-        newBodies = Iterierter_Hermite().integrate(bodies, maxTimeStep);
+        newBodies = Hermite().integrate(bodies, maxTimeStep);
         // for (const Body& body : newBodies) {
         //     body.printState();
         // }
