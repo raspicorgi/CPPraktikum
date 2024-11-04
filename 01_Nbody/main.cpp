@@ -7,6 +7,7 @@
 #include "lib/Hermite.hpp"
 #include "lib/Iterierter_Hermite.hpp"
 #include "lib/RK4.hpp"
+#include "lib/Heun.hpp"
 
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
@@ -67,7 +68,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main() {
     //prefs
-    int iterations = 627;
+    int iterations = 628;
     long double maxTimeStep = 0.01;
 
     //Load data
