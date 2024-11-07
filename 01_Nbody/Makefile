@@ -1,7 +1,7 @@
 # Compiler
 CXX = g++
 # Compiler flags
-CXXFLAGS = -std=c++11 -Wall
+CXXFLAGS = -std=c++11 -Wall -O2
 # Source files: main.cpp and all .cpp files in lib
 SRC = main.cpp $(wildcard lib/*.cpp)
 # Build directory
