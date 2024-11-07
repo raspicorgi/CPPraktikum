@@ -26,7 +26,7 @@
             }
             Vector3d r = other_body.getPosition() - current_body.getPosition();
             Vector3d v = other_body.getVelocity() - current_body.getVelocity();
-            jerk += (r * (G * other_body.getMass()) / (pow(r.magnitude(), 3))) - (v * (3 * G * other_body.getMass()) * (r.scalar_product(v)) / (pow(r.magnitude(), 5)));
+            jerk += ((v/(pow(r.magnitude(),3)) - ((r*3*v.scalar_product(r))/(pow(r.magnitude(),5))))*(G*other_body.getMass()));
         }
         return jerk;
     }
