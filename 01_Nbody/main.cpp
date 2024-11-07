@@ -8,7 +8,8 @@
 #include "lib/Iterierter_Hermite.hpp"
 #include "lib/RK4.hpp"
 #include "lib/Heun.hpp"
-
+#include <string>
+#include <cstring>
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::vector<Body> bodies;
@@ -84,8 +85,14 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 }
 
 
-int main(int argc, char* argv[]) {
-    std::cout<<*argv[0]<<std::endl; 
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <integrator>" << std::endl;
+        return 1;
+    }
+
+    std::string argument = argv[1];
+    
     //prefs
     int iterations = 628;
     long double maxTimeStep = 0.01;
@@ -110,32 +117,24 @@ int main(int argc, char* argv[]) {
     Heun Heun;
     RK4 RK4;
 
-    switch (*argv[1])
-    {
-        case 'Euler':
-            simulate(bodies, iterations, maxTimeStep, Euler);
-            break;
-        case 'C':
-            simulate(bodies, iterations, maxTimeStep, Euler_Cromer);
-            break;
-        case 'V':
-            simulate(bodies, iterations, maxTimeStep, Velocity_Verlet);
-            break;
-        case 'H':
-            simulate(bodies, iterations, maxTimeStep, Hermite);
-            break;
-        case 'I':
-            simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite);
-            break;
-        case 'R':
-            simulate(bodies, iterations, maxTimeStep, RK4);
-            break;
-        case 'U':
-            simulate(bodies, iterations, maxTimeStep, Heun);
-            break;
+    if (argument == "euler") {
+        simulate(bodies, iterations, maxTimeStep, Euler);
+    } else if (argument == "euler_cromer") {
+        simulate(bodies, iterations, maxTimeStep, Euler_Cromer);
+    } else if (argument == "velocity_verlet") {
+        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet);
+    } else if (argument == "hermite") {
+        simulate(bodies, iterations, maxTimeStep, Hermite);
+    } else if (argument == "iterierter_hermite") {
+        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite);
+    } else if (argument == "heun") {
+        simulate(bodies, iterations, maxTimeStep, Heun);
+    } else if (argument == "rk4") {
+        simulate(bodies, iterations, maxTimeStep, RK4);
+    } else {
+        std::cerr << "Unknown integrator: " << argument << std::endl;
+        return 1;
     }
+
     return 0;
-   
-    
-    
 }
