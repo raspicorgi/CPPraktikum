@@ -5,7 +5,7 @@ std::vector<Body> Iterierter_Hermite::integrate(const std::vector<Body>& bodies,
     std::vector<Body> predicted_bodies;
     std::vector<Vector3d> accelerations;
     std::vector<Vector3d> jerks;
-    int iterations = 9;
+    int iterations = 20;
     for(const Body& current_body : bodies)
             {
                 Body predicted_body = current_body;

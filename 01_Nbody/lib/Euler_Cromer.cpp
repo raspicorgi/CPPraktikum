@@ -3,7 +3,7 @@
 
         std::vector<Body> Euler_Cromer::integrate(const std::vector<Body>& bodies, const long double maxTimeStep) {
             std::vector<Body> newBodies;
-            for(const Body current_body : bodies)
+            for(const Body& current_body : bodies)
             {
                 Body new_current_body = current_body;
                 Vector3d acceleration = Tools::calc_acceleration(bodies, current_body);

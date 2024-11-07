@@ -3,7 +3,6 @@
 std::vector<Body> Heun::integrate(const std::vector<Body>& bodies, const long double maxTimeStep){
     std::vector<Body> newBodies;
     std::vector<Body> k1_bodies;
-    std::vector<Body> k2_bodies;
     Vector3d k1_velocity;
     Vector3d k1_position;
     Vector3d k2_velocity;
