@@ -4,6 +4,7 @@
 #include <cmath>
 #include <vector>
 #include <ostream>
+#include <unordered_map>
 
 class Vector3d {
 public:

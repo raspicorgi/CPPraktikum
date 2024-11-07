@@ -2,6 +2,23 @@
 
 std::vector<Body> RK4::integrate(const std::vector<Body>& Bodies, const long double maxTimeStep){
     std::vector<Body> new_Bodies;
+    std::unordered_map<int, Body> k1_map; 
+    std::unordered_map<int, Body> k2_map; 
+    std::unordered_map<int, Body> k3_map; 
+    std::unordered_map<int, Body> k4_map; 
+    for(const Body& current_body : Bodies){
+        Body k1_body = current_body;
+        Vector3d k1v= Tools::calc_acceleration(Bodies, current_body) * maxTimeStep;
+        Vector3d k1r= current_body.getVelocity() * maxTimeStep;
+        k1_body.setVelocity(k1v);
+        k1_body.setPosition(k1r);
+        k1_map[current_body.getId()] = k1_body;
+    }
+    for(const Body& current_body : Bodies){}
+    for(const Body& current_body : Bodies){}
+    for(const Body& current_body : Bodies){}
+    for(const Body& current_body : Bodies){}
+
     for(const Body& current_body : Bodies){
         Body new_current_body = current_body;
         Vector3d k1v = Tools::calc_acceleration(Bodies, current_body) * maxTimeStep;
