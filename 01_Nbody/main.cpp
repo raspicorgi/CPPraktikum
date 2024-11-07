@@ -39,6 +39,24 @@ void normalizeMasses(std::vector<Body>& bodies) {
     }
 }
 
+void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator) {
+     for (const Body& body : bodies) {
+        body.printState();
+    }
+    // main loop
+    std::vector<Body> newBodies;
+    for (int i = 1; i <= iterations; i++) {
+        newBodies =integrator.integrate(bodies, maxTimeStep);
+        std::cout << "Iteration " << i << "/" << iterations << std::endl;
+        bodies = newBodies;
+    }
+    std::cout << "Simulation complete." << std::endl;
+    for (const Body& body : newBodies) {
+        body.printState();
+    }
+    
+}
+
 void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
     // calculate center of mass
     Vector3d centerOfMass;
@@ -66,7 +84,8 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    std::cout<<*argv[0]<<std::endl; 
     //prefs
     int iterations = 628;
     long double maxTimeStep = 0.01;
@@ -83,26 +102,40 @@ int main() {
     // for (const Body& body : bodies) {
     //     body.printState();
     // }
+    Euler Euler;
+    Euler_Cromer Euler_Cromer;
+    Velocity_Verlet Velocity_Verlet;
+    Hermite Hermite;
+    Iterierter_Hermite Iterierter_Hermite;
+    Heun Heun;
+    RK4 RK4;
 
-
-    for (const Body& body : bodies) {
-        body.printState();
+    switch (*argv[1])
+    {
+        case 'Euler':
+            simulate(bodies, iterations, maxTimeStep, Euler);
+            break;
+        case 'C':
+            simulate(bodies, iterations, maxTimeStep, Euler_Cromer);
+            break;
+        case 'V':
+            simulate(bodies, iterations, maxTimeStep, Velocity_Verlet);
+            break;
+        case 'H':
+            simulate(bodies, iterations, maxTimeStep, Hermite);
+            break;
+        case 'I':
+            simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite);
+            break;
+        case 'R':
+            simulate(bodies, iterations, maxTimeStep, RK4);
+            break;
+        case 'U':
+            simulate(bodies, iterations, maxTimeStep, Heun);
+            break;
     }
-    // main loop
-    std::vector<Body> newBodies;
-    for (int i = 1; i <= iterations; i++) {
-        newBodies = Heun().integrate(bodies, maxTimeStep);
-        // for (const Body& body : newBodies) {
-        //     body.printState();
-        // }
-        std::cout << "Iteration " << i << "/" << iterations << std::endl;
-        bodies = newBodies;
-    }
-    std::cout << "Simulation complete." << std::endl;
-    for (const Body& body : newBodies) {
-        body.printState();
-    }
-    
+    return 0;
+   
     
     
 }
