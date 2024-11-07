@@ -91,7 +91,7 @@ int main() {
     // main loop
     std::vector<Body> newBodies;
     for (int i = 1; i <= iterations; i++) {
-        newBodies = RK4().integrate(bodies, maxTimeStep);
+        newBodies = Heun().integrate(bodies, maxTimeStep);
         // for (const Body& body : newBodies) {
         //     body.printState();
         // }
