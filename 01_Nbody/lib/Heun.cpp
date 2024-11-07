@@ -17,5 +17,25 @@ std::vector<Body> Heun::integrate(const std::vector<Body>& bodies, const long do
     }
 
     // loop to calculate k2 values 
-    
+    for (const Body& body : bodies){
+        Body k2_body(body.getId(), body.getMass());
+        Body moved_body = body;
+        moved_body.setPosition(body.getPosition() + k1_map[body.getId()].getPosition());
+        Vector3d k2_velocity = Tools::calc_acceleration(bodies, moved_body) * maxTimeStep;
+        Vector3d k2_position = (body.getVelocity() + k1_map[body.getId()].getVelocity()) * maxTimeStep;
+        k2_body.setVelocity(k2_velocity);
+        k2_body.setPosition(k2_position);
+        k2_map[body.getId()] = k2_body;
+    }
+
+    // loop to calculate new bodies with new positions and velocities
+    for (const Body& body : bodies){
+        Body newBody(body.getId(), body.getMass());
+        Vector3d newVelocity = body.getVelocity() + (k1_map[body.getId()].getVelocity() + k2_map[body.getId()].getVelocity()) / 2;
+        Vector3d newPosition = body.getPosition() + (k1_map[body.getId()].getPosition() + k2_map[body.getId()].getPosition()) / 2;
+        newBody.setVelocity(newVelocity);
+        newBody.setPosition(newPosition);
+        newBodies.push_back(newBody);
+    }
+    return newBodies;
 }
