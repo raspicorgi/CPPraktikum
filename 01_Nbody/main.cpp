@@ -51,7 +51,7 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
         std::cout << "Iteration " << i << "/" << iterations << std::endl;
         bodies = newBodies;
         for(Body current_body : newBodies){
-            outputFile <<current_body.getId()<<";"<<(maxTimeStep*i)<<";"<<current_body.getPosition().getX()<<";"<<current_body.getPosition().getY()<<";"<<current_body.getPosition().getZ()<<";"<<current_body.getVelocity().getX()<<";"<<current_body.getVelocity().getY()<<";"<<current_body.getVelocity().getZ()<<"\n";
+            outputFile <<current_body.getId()<<";"<<(maxTimeStep*i)<<";"<<current_body.getPosition().getX()<<";"<<current_body.getPosition().getY()<<";"<<current_body.getPosition().getZ()<<";"<<current_body.getVelocity().getX()<<";"<<current_body.getVelocity().getY()<<";"<<current_body.getVelocity().getZ()<<current_body.getMass()<<"\n";
         }
     }
     outputFile.close(); // close the file when done
@@ -108,8 +108,8 @@ int main(int argc, char *argv[]) {
     std::string argument = argv[1];
     
     //prefs
-    int iterations = 628;
-    long double maxTimeStep = std::stoi(argv[2]);
+    long double maxTimeStep = std::stold(argv[2]);
+    int iterations = 6.28/maxTimeStep;
 
     //Load data
     std::cout << "Loading data... ";
