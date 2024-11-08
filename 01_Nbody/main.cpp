@@ -40,7 +40,7 @@ void normalizeMasses(std::vector<Body>& bodies) {
     }
 }
 
-void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator) {
+void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator, const std::string& filename) {
      for (const Body& body : bodies) {
         body.printState();
     }
@@ -116,21 +116,20 @@ int main(int argc, char *argv[]) {
     Iterierter_Hermite Iterierter_Hermite;
     Heun Heun;
     RK4 RK4;
-
     if (argument == "euler") {
-        simulate(bodies, iterations, maxTimeStep, Euler);
+        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/2b_euler_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "euler_cromer") {
-        simulate(bodies, iterations, maxTimeStep, Euler_Cromer);
+        simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/2b_euler_cromer_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "velocity_verlet") {
-        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet);
+        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet,"simulated_data/2b_velocity_verlet_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "hermite") {
-        simulate(bodies, iterations, maxTimeStep, Hermite);
+        simulate(bodies, iterations, maxTimeStep, Hermite,"simulated_data/2b_hermite_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "iterierter_hermite") {
-        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite);
+        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite,"simulated_data/2b_iterierter_hermite_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "heun") {
-        simulate(bodies, iterations, maxTimeStep, Heun);
+        simulate(bodies, iterations, maxTimeStep, Heun,"simulated_data/2b_heun_" + std::to_string(maxTimeStep) +".txt");
     } else if (argument == "rk4") {
-        simulate(bodies, iterations, maxTimeStep, RK4);
+        simulate(bodies, iterations, maxTimeStep, RK4,"simulated_data/2b_rk4_" + std::to_string(maxTimeStep) +".txt");
     } else {
         std::cerr << "Unknown integrator: " << argument << std::endl;
         return 1;
