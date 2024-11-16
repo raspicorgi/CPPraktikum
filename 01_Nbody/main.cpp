@@ -60,15 +60,7 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
   else {
     std::cerr << "Error opening file\n";
   }
-     for (const Body& body : bodies) {
-        body.printState();
-    }
-    
-    std::cout << "Simulation complete." << std::endl;
-    for (const Body& body : newBodies) {
-        body.printState();
-    }
-    
+    std::cout << "Simulation complete." << std::endl;    
 }
 
 void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
@@ -100,7 +92,7 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
-        std::cerr << "Please enter an integrator and the maximal time step in this order, expample: ./name integrator maxTimeStep" << std::endl;
+        std::cerr << "Please enter an integrator and the maximal time step in this order, example: ./name integrator maxTimeStep" << std::endl;
         return 1;
     }
 
@@ -113,7 +105,7 @@ int main(int argc, char *argv[]) {
 
     //Load data
     std::cout << "Loading data... ";
-    std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
+    std::vector<Body> bodies = loadBodiesFromFile("data/1kbody.txt");
     std::cout << "Data loaded." << std::endl;
     std::cout << "Normalizing masses... ";
     normalizeMasses(bodies);
