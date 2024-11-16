@@ -43,7 +43,7 @@ void normalizeMasses(std::vector<Body>& bodies) {
 void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator, const std::string& filename,const std::string& integratorName) {
     std::ofstream outputFile(filename); // create a new output file or overwrite an existing one
     std::vector<Body> newBodies;
-    outputFile <<   "# column style format: id;time;x;y;z;vx;vy;vz;mass;rungeLenzVector;totalSpecificAngularMomentum;semiMajorAxis"
+    outputFile <<   "# column style format: id;time;x;y;z;vx;vy;vz;mass;totalSpecificAngularMomentum;rungeLenzVector;semiMajorAxis"
                     "\n# this file will be overwritten without any precaution"
                     "\n# used integrator was " + integratorName + "\n";
   if (outputFile.is_open()) {
@@ -62,8 +62,8 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
                        << current_body.getVelocity().getY() << ";"
                        << current_body.getVelocity().getZ() << ";"
                        << current_body.getMass() << ";"
-                       << Tools::rungeLenzVector(current_body).magnitude() << ";"
                        << Tools::totalSpecificAngularMomentum(bodies).magnitude() << ";"
+                       << Tools::rungeLenzVector(current_body).magnitude() << ";"
                        << Tools::semiMajorAxis(current_body) << ";"
                        << "\n";
         }
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
 
     //Load data
     std::cout << "Loading data... ";
-    std::vector<Body> bodies = loadBodiesFromFile("data/1kbody.txt");
+    std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
     std::cout << "Data loaded." << std::endl;
     std::cout << "Normalizing masses... ";
     normalizeMasses(bodies);
