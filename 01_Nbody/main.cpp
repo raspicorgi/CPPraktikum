@@ -43,7 +43,9 @@ void normalizeMasses(std::vector<Body>& bodies) {
 void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator, const std::string& filename,const std::string& integratorName) {
     std::ofstream outputFile(filename); // create a new output file or overwrite an existing one
     std::vector<Body> newBodies;
-    outputFile << "# column style format: id time x y z vx vy vz mass\n# this file will be overwritten without any precaution \n# used integrator was " + integratorName + "\n";
+    outputFile <<   "# column style format: id;time;x;y;z;vx;vy;vz;mass;rungeLenzVector;totalSpecificAngularMomentum;semiMajorAxis"
+                    "\n# this file will be overwritten without any precaution"
+                    "\n# used integrator was " + integratorName + "\n";
   if (outputFile.is_open()) {
     // main loop
     for (int i = 1; i <= iterations; i++) {
@@ -51,7 +53,19 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
         std::cout << "Iteration " << i << "/" << iterations << std::endl;
         bodies = newBodies;
         for(Body current_body : newBodies){
-            outputFile <<current_body.getId()<<";"<<(maxTimeStep*i)<<";"<<current_body.getPosition().getX()<<";"<<current_body.getPosition().getY()<<";"<<current_body.getPosition().getZ()<<";"<<current_body.getVelocity().getX()<<";"<<current_body.getVelocity().getY()<<";"<<current_body.getVelocity().getZ()<<current_body.getMass()<<"\n";
+            outputFile << current_body.getId() << ";"
+                       << (maxTimeStep * i) << ";"
+                       << current_body.getPosition().getX() << ";"
+                       << current_body.getPosition().getY() << ";"
+                       << current_body.getPosition().getZ() << ";"
+                       << current_body.getVelocity().getX() << ";"
+                       << current_body.getVelocity().getY() << ";"
+                       << current_body.getVelocity().getZ() << ";"
+                       << current_body.getMass() << ";"
+                       << Tools::rungeLenzVector(current_body).magnitude() << ";"
+                       << Tools::totalSpecificAngularMomentum(bodies).magnitude() << ";"
+                       << Tools::semiMajorAxis(current_body) << ";"
+                       << "\n";
         }
     }
     outputFile.close(); // close the file when done
