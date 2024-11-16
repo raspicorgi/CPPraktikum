@@ -30,3 +30,28 @@
         }
         return jerk;
     }
+
+    Vector3d Tools::specificAngularMomentum(const Body& body){
+        return body.getPosition().cross_product(body.getVelocity());
+    }
+
+    Vector3d Tools::totalSpecificAngularMomentum(const std::vector<Body>& bodies){
+        Vector3d angularMomentum;
+        for(const Body& body : bodies){
+            angularMomentum += Tools::specificAngularMomentum(body);
+        }
+        return angularMomentum;
+    }
+
+
+    Vector3d Tools::rungeLenzVector(const Body& body){
+        Vector3d angularMomentum = Tools::specificAngularMomentum(body);
+        Vector3d rungeLenzVector = (body.getVelocity().cross_product(angularMomentum))/Tools::G - body.getPosition()/body.getPosition().magnitude(); // skipping the division by total mass because it is normalized to 1
+    }
+
+    long double Tools::semiMajorAxis(const Body& body){
+        long double specAM = Tools::specificAngularMomentum(body).magnitude();
+        long double eccentricity = Tools::rungeLenzVector(body).magnitude();
+        return specAM*specAM/(Tools::G*(1-eccentricity*eccentricity));
+
+    }
