@@ -38,7 +38,7 @@
     Vector3d Tools::totalSpecificAngularMomentum(const std::vector<Body>& bodies){
         Vector3d angularMomentum;
         for(const Body& body : bodies){
-            angularMomentum += Tools::specificAngularMomentum(body);
+            angularMomentum += Tools::specificAngularMomentum(body) / body.getMass();
         }
         return angularMomentum;
     }
@@ -46,7 +46,7 @@
 
     Vector3d Tools::rungeLenzVector(const Body& body){
         Vector3d angularMomentum = Tools::specificAngularMomentum(body);
-        return (body.getVelocity().cross_product(angularMomentum))/Tools::G - body.getPosition()/body.getPosition().magnitude(); // skipping the division by total mass because it is normalized to 1
+        return (body.getVelocity().cross_product(angularMomentum)) - body.getPosition()/body.getPosition().magnitude(); // skipping the division by total mass because it is normalized to 1
     }
 
     long double Tools::semiMajorAxis(const Body& body){

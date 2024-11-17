@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
     Heun Heun;
     RK4 RK4;
     if (argument == "euler") {
-        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/_euler_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/2b_euler_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "euler_cromer") {
         simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/2b_euler_cromer_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "velocity_verlet") {
