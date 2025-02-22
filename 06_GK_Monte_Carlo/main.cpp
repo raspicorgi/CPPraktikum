@@ -8,6 +8,6 @@
 int main(){
     int occ[64][64] = {{0}};
     std::tupel<int[64],int> L_H;
-    std::tupel<int[64],int> int L_V = ; 
+    std::tupel<int[64],int> int L_V; 
     return 0;
 }
