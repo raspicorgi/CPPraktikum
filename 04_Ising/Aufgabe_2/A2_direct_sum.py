@@ -7,17 +7,15 @@ def energy(config, L):
     E = 0
     for i in range(L):
         for j in range(L):
-            S = config[i, j]
+            spin = config[i, j]
             neighbors = config[(i+1) % L, j] + config[i, (j+1) % L] + config[(i-1) % L, j] + config[i, (j-1) % L]
-            E += -S * neighbors
+            E += -spin * neighbors
     return E / 2  # Doppelte Zählung vermeiden
 
 def magnetization(config):
-    """Berechnet die Magnetisierung einer Konfiguration."""
     return np.sum(config)
 
 def ising_exact(L, beta_values):
-    """Berechnet die mittlere Energie und Magnetisierung durch vollständige Summation."""
     num_spins = L * L
     states = list(product([-1, 1], repeat=num_spins))
     

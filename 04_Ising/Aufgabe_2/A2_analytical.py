@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def analytical_energy(beta, J=1):
     """ Berechnet die mittlere Energie pro Spin mit der Onsager-Formel """
     k = 4 * np.tanh(beta * J)**2
-    return 2J -J * (1/np.tanh(2 * beta * J)) * (1 + (2 / np.pi) * (2 * np.tanh(2 * beta * J)**2 - 1) * sp.ellipk(k))
+    return 2*J -J * (1/np.tanh(2 * beta * J)) * (1 + (2 / np.pi) * (2 * np.tanh(2 * beta * J)**2 - 1) * sp.ellipk(k))
 
 def analytical_magnetization(beta, J=1):
     """ Berechnet die absolute Magnetisierung für T < Tc (beta > beta_c) """
@@ -26,8 +26,7 @@ print("Analytische Werte:")
 print("Energie:", energy_analytical)
 print("Magnetisierung:", magnetization_analytical)
 
-# === Vergleich mit numerischen Daten (Platzhalter: hier deine Simulationswerte einfügen!) ===
-# Ersetze diese Arrays mit deinen numerischen Simulationsergebnissen:
+# === Vergleich mit numerischen Daten ===
 energy_numerical = np.array([0.0, -1.8285109168848936, -3.8046133800390773, -5.599786118820443, -6.819152683671692, -7.471417020216961, -7.774425098686427, -7.905787493141993, -7.961012834812352, -7.98392834374676])  # Hier deine berechneten Energien einfügen
 magnetization_numerical = np.array([1.5, 2.00482005378279, 2.6201838757774083, 3.20445648070164, 3.6073123761875125, 3.823977431111739, 3.9248385694096433, 3.9686010219399424, 3.987005161726391, 3.9946429309943987])  # Hier deine berechneten |M|-Werte einfügen
 
