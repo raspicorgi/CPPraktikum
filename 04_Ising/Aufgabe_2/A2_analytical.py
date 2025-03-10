@@ -1,12 +1,22 @@
 import numpy as np
 import scipy.special as sp
+import scipy.integrate as integrate
 import matplotlib.pyplot as plt
 
 # === Definition der analytischen Formeln ===
 def analytical_energy(beta, J=1):
-    """ Berechnet die mittlere Energie pro Spin mit der Onsager-Formel """
-    k = 4 * np.tanh(beta * J)**2
-    return 2*J -J * (1/np.tanh(2 * beta * J)) * (1 + (2 / np.pi) * (2 * np.tanh(2 * beta * J)**2 - 1) * sp.ellipk(k))
+    """Berechnet die Energiedichte für das 2D-Ising-Modell analytisch."""
+    tanh_beta = np.tanh(2 * beta)
+    cosh_beta = np.cosh(2 * beta)
+    xi = 2 * tanh_beta / cosh_beta
+    
+    def integrand(theta, xi):
+        return 1 / np.sqrt(1 - xi**2 * np.sin(theta)**2)
+    
+    K_xi, _ = integrate.quad(integrand, 0, np.pi/2, args=(xi,))
+    
+    energy_density = 2 - cosh_beta / (1 / tanh_beta) * (1 + (2 * tanh_beta**2 - 1) * 2 / np.pi * K_xi)
+    return energy_density
 
 def analytical_magnetization(beta, J=1):
     """ Berechnet die absolute Magnetisierung für T < Tc (beta > beta_c) """
