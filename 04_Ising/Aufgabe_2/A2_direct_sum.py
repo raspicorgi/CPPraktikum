@@ -35,12 +35,10 @@ def ising_exact(L, beta_values):
             results[beta]['Z'] += weight
     
     for beta in beta_values:
-        # Normalize by Z to get averages
         results[beta]['E'] /= results[beta]['Z']
         results[beta]['M'] /= results[beta]['Z']
         results[beta]['|M|'] /= results[beta]['Z']
         
-        # Normalize by number of sites to get per-site values
         results[beta]['E'] /= (L * L)
         results[beta]['M'] /= (L * L)
         results[beta]['|M|'] /= (L * L)
@@ -94,7 +92,7 @@ for idx, (L, results) in enumerate(data.items()):
 
     plt.subplot(2, 1, 1)
     plt.plot(betas, energies, marker='o', color=colors[idx], label=f'L = {L}')
-    plt.ylabel('Energie')
+    plt.ylabel('Energiedichte')
 
     plt.subplot(2, 1, 2)
     plt.plot(betas, abs_magnetizations, marker='o', color=colors[idx], label=f'L = {L}')
@@ -103,7 +101,7 @@ for idx, (L, results) in enumerate(data.items()):
 
 plt.subplot(2, 1, 1)
 plt.plot(beta_values, data_analytical['E'], color='black', linestyle='dashed', label='Analytisch')
-plt.title('Energie')
+plt.title('Energiedichte')
 
 plt.subplot(2, 1, 2)
 plt.plot(beta_values, data_analytical['M'], color='black', linestyle='dashed', label='Analytisch')
