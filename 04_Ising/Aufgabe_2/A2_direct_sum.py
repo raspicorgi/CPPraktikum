@@ -42,7 +42,7 @@ def ising_exact(L, beta_values):
 
 # Parameter
 grid_sizes = [2, 3, 4]
-beta_values = np.linspace(0, 1, 10)
+beta_values = np.linspace(0, 1, 200)
 
 # Berechnung
 data = {L: ising_exact(L, beta_values) for L in grid_sizes}
@@ -55,32 +55,28 @@ for L, results in data.items():
         
 
 # Plotting the results
-for L, results in data.items():
+colors = ['r', 'g', 'b']
+plt.figure(figsize=(12, 8))
+
+for idx, (L, results) in enumerate(data.items()):
     betas = list(results.keys())
     energies = [results[beta]['E'] for beta in betas]
     magnetizations = [results[beta]['M'] for beta in betas]
     abs_magnetizations = [results[beta]['|M|'] for beta in betas]
 
-    print(f"L = {L} M:", [float(m) for m in abs_magnetizations])
-    print(f"L = {L} E:", [float(m) for m in energies])
-
-
-    plt.figure(figsize=(12, 8))
-
-    plt.subplot(3, 1, 1)
-    plt.plot(betas, energies, marker='o')
-    plt.title(f'Gittergröße L = {L}')
+    plt.subplot(2, 1, 1)
+    plt.plot(betas, energies, marker='o', color=colors[idx], label=f'L = {L}')
     plt.ylabel('Energie')
 
-    plt.subplot(3, 1, 2)
-    plt.plot(betas, magnetizations, marker='o')
-    plt.ylabel('Magnetisierung')
-
-    plt.subplot(3, 1, 3)
-    plt.plot(betas, abs_magnetizations, marker='o')
+    plt.subplot(2, 1, 2)
+    plt.plot(betas, abs_magnetizations, marker='o', color=colors[idx], label=f'L = {L}')
     plt.xlabel('Beta')
     plt.ylabel('|Magnetisierung|')
 
-    plt.tight_layout()
-    plt.savefig(f'04_Ising/Aufgabe_2/plots/L_{L}_plot.png')
-    plt.close()
+for i in range(2):
+    plt.subplot(2, 1, i+1)
+    plt.legend()
+
+plt.tight_layout()
+plt.savefig('04_Ising/Aufgabe_2/plots/combined_plot.png')
+plt.close()
