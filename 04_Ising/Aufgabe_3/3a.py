@@ -4,12 +4,11 @@ import matplotlib.pyplot as plt
 
 
 # Parameter
-N = 100
-L = 20
+L = 128
 h = 0
 J = 1
-betas = [0.1, 0.5, 1]
-N_try = 100
+betas = [0.1, 0.3, 0.7, 1]
+N_try = 5
 N_therm = 1000
 
 def process_beta(beta):

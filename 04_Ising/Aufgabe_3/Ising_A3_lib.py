@@ -9,11 +9,11 @@ def energy(h: float, J: float, lattice: np.ndarray) -> float:
     """Berechne die Energie des Gitters."""
     L = lattice.shape[0]
     E = 0
-    for i in range(L):
-        for j in range(L):
-            E += -J * lattice[i, j] * (lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]) / 2 # Doppelzählung vermeiden
+    # for i in range(L):
+    #     for j in range(L):
+    #         E += -J * lattice[i, j] * (lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]) / 2 # Doppelzählung vermeiden
     # == Mögliche Alternative für nested for loop:
-    # E += -J * np.sum(lattice * (np.roll(lattice, 1, axis=0) + np.roll(lattice, -1, axis=0) + np.roll(lattice, 1, axis=1) + np.roll(lattice, -1, axis=1))) / 2
+    E += -J * np.sum(lattice * (np.roll(lattice, 1, axis=0) + np.roll(lattice, -1, axis=0) + np.roll(lattice, 1, axis=1) + np.roll(lattice, -1, axis=1))) / 2
     
     E -= h * np.sum(lattice)
     return E
@@ -21,13 +21,13 @@ def energy(h: float, J: float, lattice: np.ndarray) -> float:
 def sweep_metropolis(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int) -> np.ndarray:
     """Führe einen Sweep mit dem Metropolis-Algorithmus durch."""
     L = lattice.shape[0]
-    for _ in range(L**2):
-        i, j = np.random.randint(0, L, size=2)
-        s1 = np.random.choice([-1, 1])
-        dE = 2 * J * s1 * (lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]) + 2 * h * s1
-        for _ in range(N_try):
-            if (dE < 0) or np.random.uniform() < np.exp(-beta * dE):
-                lattice[i, j] = s1
+    for i in range(L):
+        for j in range(L):
+            s1 = np.random.choice([-1, 1])
+            dE = 2 * -J * s1 * (lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]) + 2 * h * s1
+            for _ in range(N_try):
+                if (dE < 0) or np.random.uniform() < np.exp(-beta * dE):
+                    lattice[i, j] = s1
 
     return lattice
 
