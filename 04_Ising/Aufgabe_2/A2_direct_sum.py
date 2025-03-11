@@ -1,5 +1,6 @@
 import numpy as np
 from itertools import product
+import os
 import matplotlib.pyplot as plt
 
 def energy(config, L):
@@ -78,5 +79,10 @@ for i in range(2):
     plt.legend()
 
 plt.tight_layout()
-plt.savefig('04_Ising/Aufgabe_2/plots/combined_plot.png')
+script_dir = os.path.dirname(os.path.abspath(__file__))
+plot_dir = os.path.join(script_dir, 'plots')
+if not os.path.exists(plot_dir):
+    os.makedirs(plot_dir)
+plot_path = os.path.join(script_dir, 'plots', 'combined_plot.png')
+plt.savefig(plot_path)
 plt.close()
