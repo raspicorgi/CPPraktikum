@@ -31,7 +31,7 @@ def sweep_metropolis(lattice: np.ndarray, h: float, J: float, beta: float, N_try
 
     return lattice
 
-def thermalize(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int, N_therm: int) -> np.ndarray:
+def thermalize(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int, N_therm: int, worker_index: int) -> np.ndarray:
     """
     Thermalisiere das Gitter.
     Parameters:
@@ -49,7 +49,7 @@ def thermalize(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int,
     """Thermalisiere das Gitter."""
     energies = np.zeros(N_therm)
     L = lattice.shape[0]
-    for i in tqdm(range(N_therm), desc=f"Thermalisierung, beta = {beta:.2f}"):
+    for i in tqdm(range(N_therm), desc=f"Thermalisierung, beta = {beta:.2f}", position=worker_index):
         lattice = sweep_metropolis(lattice, h, J, beta, N_try)
         energies[i] = energy(h, J, lattice)
 
