@@ -9,7 +9,7 @@ h = 0
 J = 1
 betas = [0.1, 0.4, 0.7, 1]
 N_try = 5
-N_therm = 10**5
+N_therm = 4000
 
 def process_beta(beta):
     # Initialisiere Gitter
