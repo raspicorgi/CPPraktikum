@@ -1,10 +1,10 @@
 import numpy as np
 from itertools import product
+import scipy.integrate as integrate
 import os
 import matplotlib.pyplot as plt
 
 def energy(config, L):
-    """Berechnet die Energie einer gegebenen Konfiguration."""
     E = 0
     for i in range(L):
         for j in range(L):
@@ -35,18 +35,45 @@ def ising_exact(L, beta_values):
             results[beta]['Z'] += weight
     
     for beta in beta_values:
+        # Normalize by Z to get averages
         results[beta]['E'] /= results[beta]['Z']
         results[beta]['M'] /= results[beta]['Z']
         results[beta]['|M|'] /= results[beta]['Z']
+        
+        # Normalize by number of sites to get per-site values
+        results[beta]['E'] /= (L * L)
+        results[beta]['M'] /= (L * L)
+        results[beta]['|M|'] /= (L * L)
     
     return results
+
+def analytical_energy(beta):
+    tanh_beta = np.tanh(2 * beta)
+    cosh_beta = np.cosh(2 * beta)
+    xi = 2 * tanh_beta / cosh_beta
+    
+    def integrand(theta, xi):
+        return 1 / np.sqrt(1 - xi**2 * np.sin(theta)**2)
+    
+    K_xi, _ = integrate.quad(integrand, 0, np.pi/2, args=(xi,))
+    
+    energy_density = - (1 / tanh_beta) * (1 + (2 * tanh_beta**2 - 1) * 2 / np.pi * K_xi)
+    return energy_density
+
+def analytical_magnetization(beta):
+    return (1 - np.sinh(2 * beta)**-4) ** (1 / 8)
 
 # Parameter
 grid_sizes = [2, 3, 4]
 beta_values = np.linspace(0, 1, 200)
 
 # Berechnung
+print("Numerische Werte...")
 data = {L: ising_exact(L, beta_values) for L in grid_sizes}
+
+print("Analytische Werte...")
+data_analytical = {'E': np.array([analytical_energy(beta) for beta in beta_values]),
+                   'M': np.array([analytical_magnetization(beta) for beta in beta_values])}
 
 # Ergebnisse ausgeben
 for L, results in data.items():
@@ -55,7 +82,7 @@ for L, results in data.items():
         print(f"Beta: {beta:.2f}, E: {values['E']:.4f}, M: {values['M']:.4f}, |M|: {values['|M|']:.4f}")
         
 
-# Plotting the results
+# Ergebnisse plotten
 colors = ['r', 'g', 'b']
 plt.figure(figsize=(12, 8))
 
@@ -73,6 +100,14 @@ for idx, (L, results) in enumerate(data.items()):
     plt.plot(betas, abs_magnetizations, marker='o', color=colors[idx], label=f'L = {L}')
     plt.xlabel('Beta')
     plt.ylabel('|Magnetisierung|')
+
+plt.subplot(2, 1, 1)
+plt.plot(beta_values, data_analytical['E'], color='black', linestyle='dashed', label='Analytisch')
+plt.title('Energie')
+
+plt.subplot(2, 1, 2)
+plt.plot(beta_values, data_analytical['M'], color='black', linestyle='dashed', label='Analytisch')
+plt.title('Magnetisierung')
 
 for i in range(2):
     plt.subplot(2, 1, i+1)

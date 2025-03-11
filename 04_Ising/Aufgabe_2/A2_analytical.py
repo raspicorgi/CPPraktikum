@@ -26,7 +26,7 @@ def analytical_magnetization(beta, J=1):
     return (1 - np.sinh(-4 * beta * J)**-4) ** (1 / 8)
 
 # === Wertebereich für Beta ===
-beta_values = np.linspace(0.1, 1.0, 10)  # Werte für 1/T
+beta_values = np.linspace(0.1, 1.0, 200)  # Werte für 1/T
 
 # === Berechnung der analytischen Werte ===
 energy_analytical = np.array([analytical_energy(beta) for beta in beta_values])
