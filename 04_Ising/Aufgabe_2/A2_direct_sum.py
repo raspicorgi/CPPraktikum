@@ -82,7 +82,7 @@ for L, results in data.items():
 
 # Ergebnisse plotten
 colors = ['r', 'g', 'b']
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(8, 8))
 
 for idx, (L, results) in enumerate(data.items()):
     betas = list(results.keys())
