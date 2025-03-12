@@ -9,10 +9,11 @@ h = 0
 J = 1
 betas = [0.1, 0.4, 0.7, 1]
 N_try = 5
-N_therm = 4000
+N_therm = 6000
 
 def process_beta(beta):
     # Initialisiere Gitter
+    print("started calculation for beta = ", beta)
     lattice = ising.init_random_lattice(L)
     energies, lattice = ising.thermalize(lattice, h, J, beta, N_try, N_therm, betas.index(beta))
     energies = energies / (L * L) # Energie pro Spin

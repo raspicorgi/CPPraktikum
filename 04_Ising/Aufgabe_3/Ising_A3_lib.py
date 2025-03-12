@@ -11,8 +11,8 @@ def energy(h: float, J: float, lattice: np.ndarray) -> float:
     """Berechne die Energie des Gitters."""
     L = lattice.shape[0]
     E = 0
-    for i in range(L):
-        for j in range(L):
+    for i in prange(L):
+        for j in prange(L):
             E += -J * lattice[i, j] * (lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]) / 2 # Doppelzählung vermeiden
     # == Mögliche Alternative für nested for loop:
     # E += -J * np.sum(lattice * (np.roll(lattice, 1, axis=0) + np.roll(lattice, -1, axis=0) + np.roll(lattice, 1, axis=1) + np.roll(lattice, -1, axis=1))) / 2
