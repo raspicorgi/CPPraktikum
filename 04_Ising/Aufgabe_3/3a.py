@@ -1,50 +1,67 @@
 import Ising_A3_lib as ising
 from joblib import Parallel, delayed
+from timeit import default_timer as timer
 import matplotlib.pyplot as plt
 import numpy as np
+import os.path
 
 
 # Parameter
 L = 128
 h = 0
 J = 1
-betas = np.linspace(0, 1, 10)
+betas = np.linspace(0, 1, 100)
+
+# start timer
+start = timer()
 
 # Function to run simulation for a given beta
 def run_simulation(beta):
-    return beta, ising.simulate_metropolis(h, J, beta, 10)
+    res = ising.simulate_metropolis(h, J, beta, 100)
+    print(f"Finished simulation #{betas.index(beta) +1} for beta = {beta}")
+    return beta, res
 
 # Run simulations in parallel
 results = Parallel(n_jobs=-1)(delayed(run_simulation)(beta) for beta in betas)
 
+# stop timer
+end = timer()
+print(f"Simulation took {end - start} seconds")
 # Plot results in separate plots and save them to files
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+plot_dir = os.path.join(script_dir, 'plots3a')
+if not os.path.exists(plot_dir):
+    os.makedirs(plot_dir)
 
 # Energie plot
 plt.figure()
 plt.title('Energie')
-for beta, result in results:
-    plt.plot(beta, result[0], 'o')
-    print(f"beta = {beta}, Energie: {result[0]}")
+betas = [beta for beta, result in results]
+energies = [result[0] for beta, result in results]
+plt.plot(betas, energies, '-o')
+print(f"Betas: {betas}")
+print(f"Energies: {energies}")
 plt.xlabel('Beta')
 plt.ylabel('Energie')
-plt.savefig('energie_plot.png')
+plt.savefig(os.path.join(plot_dir, 'energie_plot.png'))
 
 # Magnetisierung plot
 plt.figure()
 plt.title('Magnetisierung')
-for beta, result in results:
-    plt.plot(beta, result[1], 'x')
+magnetizations = [result[1] for beta, result in results]
+plt.plot(betas, magnetizations, '-o')
 plt.xlabel('Beta')
 plt.ylabel('Magnetisierung')
-plt.savefig('magnetisierung_plot.png')
+plt.savefig(os.path.join(plot_dir, 'magnetisierung_plot.png'))
 
 # Spezifische Wärme plot
 plt.figure()
 plt.title('Spezifische Wärme')
-for beta, result in results:
-    plt.plot(beta, result[2], 's')
+specific_heats = [result[2] for beta, result in results]
+plt.plot(betas, specific_heats, '-o')
 plt.xlabel('Beta')
 plt.ylabel('Spezifische Wärme')
-plt.savefig('spezifische_waerme_plot.png')
+plt.savefig(os.path.join(plot_dir, 'spezifische_waerme_plot.png'))
 
 
