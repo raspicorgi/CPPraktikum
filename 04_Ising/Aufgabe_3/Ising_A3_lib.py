@@ -40,8 +40,8 @@ def draw(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int, N_dra
     return lattice
 
 @njit
-def simulate_metropolis(h: float, J: float, beta: float, sweeps: int) -> tuple:
-    lattice = init_thermalized_lattice(128)
+def simulate_metropolis(h: float, J: float, beta: float, sweeps: int, L: int) -> tuple:
+    lattice = init_thermalized_lattice(L)
 
     energies = np.empty(sweeps)
     magnetizations = np.empty(sweeps)
@@ -62,7 +62,7 @@ def simulate_metropolis(h: float, J: float, beta: float, sweeps: int) -> tuple:
 
     specific_heat = beta**2 * (mean_energy_sq - mean_energy**2)
 
-    return mean_energy, mean_magnetization, specific_heat
+    return mean_energy, mean_magnetization, specific_heat, mean_magnetization_sq
 
 @njit(parallel=True)
 def sweep_metropolis(lattice: np.ndarray, beta: float, h: float = 0.0, J: float = 1.0,  N_try: int = 5) -> np.ndarray:
