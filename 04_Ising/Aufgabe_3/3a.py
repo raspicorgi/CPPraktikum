@@ -16,13 +16,13 @@ betas = np.linspace(0, 1, 100)
 start = timer()
 
 # Function to run simulation for a given beta
-def run_simulation(beta):
+def run_simulation(beta, index):
     res = ising.simulate_metropolis(h, J, beta, 100)
-    print(f"Finished simulation #{betas.index(beta) +1} for beta = {beta}")
+    print(f"Finished simulation #{index + 1} for beta = {beta}")
     return beta, res
 
 # Run simulations in parallel
-results = Parallel(n_jobs=-1)(delayed(run_simulation)(beta) for beta in betas)
+results = Parallel(n_jobs=-1)(delayed(run_simulation)(beta, i) for i, beta in enumerate(betas))
 
 # stop timer
 end = timer()
