@@ -16,7 +16,6 @@ def process_beta(beta):
     print("started calculation for beta = ", beta)
     lattice = ising.init_random_lattice(L)
     energies, lattice = ising.thermalize(lattice, h, J, beta, N_try, N_therm, betas.index(beta))
-    energies = energies / (L * L) # Energie pro Spin
     return beta, energies
 
 results = Parallel(n_jobs=-1)(delayed(process_beta)(beta) for beta in betas)

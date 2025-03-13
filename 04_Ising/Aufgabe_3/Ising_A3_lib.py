@@ -2,12 +2,21 @@ import numpy as np
 from numba import njit, prange
 from tqdm import tqdm
 
+@njit
 def init_random_lattice(L: int) -> np.ndarray:
     """Erstelle ein zufälliges Gitter mit Spins -1 oder 1. Form: (L, L)"""
     return 2 * np.random.randint(0, 2, size=(L, L)) - 1 ## hotfix because random.choice not available in numba
 
 @njit
-def energy(h: float, J: float, lattice: np.ndarray) -> float:
+def init_thermalized_lattice(L: int) -> np.ndarray:
+    """Erstelle ein thermalisiertes Gitter mit Spins -1 oder 1. Form: (L, L)"""
+    lattice = init_random_lattice(L)
+    for i in range(4000):
+        lattice = sweep_metropolis(lattice, 1, 0, 1, 5)
+    return lattice
+
+@njit
+def energy_density(h: float, J: float, lattice: np.ndarray) -> float:
     """Berechne die Energie des Gitters."""
     L = lattice.shape[0]
     E = 0
@@ -18,10 +27,45 @@ def energy(h: float, J: float, lattice: np.ndarray) -> float:
     # E += -J * np.sum(lattice * (np.roll(lattice, 1, axis=0) + np.roll(lattice, -1, axis=0) + np.roll(lattice, 1, axis=1) + np.roll(lattice, -1, axis=1))) / 2
     
     E -= h * np.sum(lattice)
-    return E
+    return E / L**2
+
+@njit
+def magnetization(lattice: np.ndarray) -> float:
+    return np.sum(lattice) / lattice.size
+
+@njit
+def draw(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int, N_draw: int) -> np.ndarray:
+    for i in range(N_draw):
+        lattice = sweep_metropolis(lattice, beta, h, J, N_try)
+    return lattice
+
+@njit
+def simulate_metropolis(h: float, J: float, beta: float, sweeps: int) -> tuple:
+    lattice = init_thermalized_lattice(128)
+
+    energies = np.empty(sweeps)
+    magnetizations = np.empty(sweeps)
+    energies_sq = np.empty(sweeps)
+    magnetizations_sq = np.empty(sweeps)
+
+    for i in range(sweeps):
+        lattice = sweep_metropolis(lattice, beta, h, J, 5)
+        energies[i] = energy_density(h, J, lattice)
+        magnetizations[i] = magnetization(lattice)
+        energies_sq[i] = energies[i]**2
+        magnetizations_sq[i] = magnetizations[i]**2
+
+    mean_energy = np.mean(energies)
+    mean_magnetization = np.mean(magnetizations)
+    mean_energy_sq = np.mean(energies_sq)
+    mean_magnetization_sq = np.mean(magnetizations_sq)
+
+    specific_heat = beta**2 * (mean_energy_sq - mean_energy**2)
+
+    return mean_energy, mean_magnetization, specific_heat
 
 @njit(parallel=True)
-def sweep_metropolis(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int) -> np.ndarray:
+def sweep_metropolis(lattice: np.ndarray, beta: float, h: float = 0.0, J: float = 1.0,  N_try: int = 5) -> np.ndarray:
     """Führe einen Sweep mit dem Metropolis-Algorithmus durch."""
     L = lattice.shape[0]
     for i in prange(L):
@@ -54,7 +98,7 @@ def thermalize(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int,
     energies = np.zeros(N_therm)
     L = lattice.shape[0]
     for i in range(N_therm): # tqdm(range(N_therm), desc=f"Thermalisierung, beta = "+ beta, position=worker_index):
-        lattice = sweep_metropolis(lattice, h, J, beta, N_try)
-        energies[i] = energy(h, J, lattice)
+        lattice = sweep_metropolis(lattice, beta, h, J, N_try)
+        energies[i] = energy_density(h, J, lattice)
 
     return energies, lattice
