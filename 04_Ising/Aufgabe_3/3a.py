@@ -40,8 +40,6 @@ plt.title('Energie')
 betas = [beta for beta, result in results]
 energies = [result[0] for beta, result in results]
 plt.plot(betas, energies, '-o')
-print(f"Betas: {betas}")
-print(f"Energies: {energies}")
 plt.xlabel('Beta')
 plt.ylabel('Energie')
 plt.savefig(os.path.join(plot_dir, 'energie_plot.png'))
