@@ -51,7 +51,7 @@ def simulate_metropolis(h: float, J: float, beta: float, sweeps: int, L: int) ->
     for i in range(sweeps):
         lattice = sweep_metropolis(lattice, beta, h, J, 5)
         energies[i] = energy_density(h, J, lattice)
-        magnetizations[i] = magnetization(lattice)
+        magnetizations[i] = np.abs(magnetization(lattice))
         energies_sq[i] = energies[i]**2
         magnetizations_sq[i] = magnetizations[i]**2
 
