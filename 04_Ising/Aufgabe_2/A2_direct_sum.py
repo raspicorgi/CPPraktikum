@@ -65,6 +65,9 @@ def analytical_magnetization(beta):
 grid_sizes = [2, 3, 4]
 beta_values = np.linspace(0, 1, 200)
 
+print(analytical_energy(4))
+exit()
+
 # Berechnung
 print("Numerische Werte...")
 data = {L: ising_exact(L, beta_values) for L in grid_sizes}
@@ -119,3 +122,5 @@ if not os.path.exists(plot_dir):
 plot_path = os.path.join(script_dir, 'plots', 'combined_plot.png')
 plt.savefig(plot_path)
 plt.close()
+
+print("Ising exact für beta = 0.4406868:", ising_exact(128, [0.4406868])[0.4406868])
