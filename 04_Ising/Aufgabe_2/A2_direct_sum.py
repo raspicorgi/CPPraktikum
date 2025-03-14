@@ -20,7 +20,7 @@ def ising_exact(L, beta_values):
     num_spins = L * L
     states = list(product([-1, 1], repeat=num_spins))
     
-    results = {beta: {'E': 0, 'M': 0, '|M|': 0, 'Z': 0} for beta in beta_values}
+    results = {beta: {'E': 0, 'M': 0, '|M|': 0, 'M2': 0, 'Z': 0} for beta in beta_values}
     
     for state in states:
         config = np.array(state).reshape((L, L))
@@ -32,16 +32,19 @@ def ising_exact(L, beta_values):
             results[beta]['E'] += E * weight
             results[beta]['M'] += M * weight
             results[beta]['|M|'] += abs(M) * weight
+            results[beta]['M2'] += M**2 * weight
             results[beta]['Z'] += weight
     
     for beta in beta_values:
         results[beta]['E'] /= results[beta]['Z']
         results[beta]['M'] /= results[beta]['Z']
         results[beta]['|M|'] /= results[beta]['Z']
+        results[beta]['M2'] /= results[beta]['Z']
         
         results[beta]['E'] /= (L * L)
         results[beta]['M'] /= (L * L)
         results[beta]['|M|'] /= (L * L)
+        results[beta]['M2'] /= (L * L)**2
     
     return results
 
@@ -65,7 +68,12 @@ def analytical_magnetization(beta):
 grid_sizes = [2, 3, 4]
 beta_values = np.linspace(0, 1, 200)
 
-print(analytical_energy(4))
+print("Energy: ", analytical_energy(0.4406868))
+print("Magnetization: ", analytical_magnetization(0.4406868))
+print("Ising-Exact magnetization: ", ising_exact(4, [0.4406868])[0.4406868]['|M|'])
+print("Ising-Exact magnetization^2: ", ising_exact(4, [0.4406868])[0.4406868]['M2'])
+print("Ising-Exact energy: ", ising_exact(4, [0.4406868])[0.4406868]['E'])
+
 exit()
 
 # Berechnung
@@ -122,5 +130,3 @@ if not os.path.exists(plot_dir):
 plot_path = os.path.join(script_dir, 'plots', 'combined_plot.png')
 plt.savefig(plot_path)
 plt.close()
-
-print("Ising exact für beta = 0.4406868:", ising_exact(128, [0.4406868])[0.4406868])
