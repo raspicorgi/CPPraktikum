@@ -18,7 +18,7 @@ start = timer()
 
 # Function to run simulation for a given beta
 def run_simulation(L, index):
-    res = ising.simulate_metropolis(h, J, beta, sweeps=200000, L=L)
+    res = ising.simulate_heatbath(h, J, beta, sweeps=200000, L=L)
     print(f"Finished simulation #{index + 1} for L = {L}")
     return L, res
 

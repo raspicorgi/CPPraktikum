@@ -7,8 +7,8 @@ import os.path
 
 # Parameter
 L = 128
-h_ext = 1
-h_step_number = 100
+h_ext = 0.3
+h_step_number = 300
 N_sweeps = 1000
 J = 1
 beta = 0.8
