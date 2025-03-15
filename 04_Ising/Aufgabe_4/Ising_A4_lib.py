@@ -74,12 +74,12 @@ def sweep_heat_bath(lattice: np.ndarray, beta: float, h: float = 0.0, J: float =
             delta = lattice[(i+1)%L, j] + lattice[i, (j+1)%L] + lattice[(i-1)%L, j] + lattice[i, (j-1)%L]
             k = beta * (J * delta + h)
             z = 2 * np.cosh(k)
-            q = np.exp(k) / z
+            q = np.exp(-k) / z
             r = np.random.uniform(0, 1)
             if (r < q):
-                lattice[i, j] = 1
-            else:
                 lattice[i, j] = -1
+            else:
+                lattice[i, j] = 1
     return lattice
             
 
@@ -107,3 +107,15 @@ def thermalize(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int,
         energies[i] = energy_density(h, J, lattice)
 
     return energies, lattice
+
+@njit
+def hysteresis_simulation(lattice: np.ndarray, beta: float, J: float, h_from: float, h_to: float, h_steps: int, N_sweep, L: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    hs = np.linspace(h_from, h_to, h_steps)
+    magnetizations = np.empty(h_steps)
+    for i in range(h_steps):
+        h = hs[i]
+        for n in range(N_sweep):
+            lattice = sweep_heat_bath(lattice, beta, h, J, 1)
+        magnetizations[i] = np.sum(lattice)
+
+    return lattice, hs, magnetizations / L**2
