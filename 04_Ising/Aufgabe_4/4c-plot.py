@@ -1,44 +1,15 @@
-import Ising_A4_lib as ising
-import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import os.path
-import pandas as pd
 from mpl_toolkits.mplot3d import Axes3D
-import time  # Add import for time module
-
-# Parameter
-L = 128
-hs = np.linspace(-1, 1, 50)
-J = 1
-betas = np.linspace(0, 1, 50)
-N_sweeps = 1000
-
-output_hs = []
-output_betas = []
-output_magnetizations = []
-output_magnetizations_abs = []
-
-start_time = time.time()  # Start timing
-
-# Run simulation
-for h in hs:
-    for beta in betas:
-        mag, mag_abs = ising.simulate_heatbath(h, J, beta, N_sweeps, L)
-        output_hs.append(h)
-        output_betas.append(beta)
-        output_magnetizations.append(mag)
-        output_magnetizations_abs.append(mag_abs)
-
-end_time = time.time()  # End timing
-print(f"Simulation took {end_time - start_time:.2f} seconds")  # Print the elapsed time
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 plot_dir = os.path.join(script_dir, 'outputs4c')
 if not os.path.exists(plot_dir):
     os.makedirs(plot_dir)
 
-output = pd.DataFrame({'h': output_hs, 'beta': output_betas, 'Magnetisierung': output_magnetizations, 'Magnetisierung_abs': output_magnetizations_abs})
-output.to_csv(os.path.join(plot_dir, 'output.csv'), index=False)
+output = pd.read_csv(os.path.join(plot_dir, 'output.csv'))
+
 
 fig = plt.figure(figsize=(14, 6))
 
