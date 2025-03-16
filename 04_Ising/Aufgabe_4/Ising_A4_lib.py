@@ -43,26 +43,27 @@ def draw(lattice: np.ndarray, h: float, J: float, beta: float, N_try: int, N_dra
 def simulate_heatbath(h: float, J: float, beta: float, sweeps: int, L: int) -> tuple:
     lattice = init_thermalized_lattice(L)
 
-    #energies = np.empty(sweeps)
+    energies = np.empty(sweeps)
     magnetizations = np.empty(sweeps)
-    #energies_sq = np.empty(sweeps)
+    energies_sq = np.empty(sweeps)
     magnetizations_abs = np.empty(sweeps)
 
     for i in range(sweeps):
         lattice = sweep_heat_bath(lattice, beta, h, J, 1)
-        #energies[i] = energy_density(h, J, lattice)
-        magnetizations[i] = magnetization(lattice)
-        #energies_sq[i] = energies[i]**2
-        magnetizations_abs[i] = np.abs(magnetizations[i])
+        energies[i] = energy_density(h, J, lattice)
+        magnetizations[i] = np.abs(magnetization(lattice))
+        energies_sq[i] = energies[i]**2
+        magnetizations_abs[i] = magnetizations[i]**2
 
-    #mean_energy = np.mean(energies)
+    mean_energy = np.mean(energies)
     mean_magnetization = np.mean(magnetizations)
-    #mean_energy_sq = np.mean(energies_sq)
+    mean_energy_sq = np.mean(energies_sq)
     mean_magnetization_abs = np.mean(magnetizations_abs)
 
-    #specific_heat = beta**2 * (mean_energy_sq - mean_energy**2)
+    specific_heat = beta**2 * (mean_energy_sq - mean_energy**2)
 
-    return mean_magnetization, mean_magnetization_abs
+    return mean_energy, mean_magnetization, specific_heat, mean_magnetization_abs
+    #return mean_magnetization, mean_magnetization_abs
 
 @njit(parallel=True)
 def sweep_heat_bath(lattice: np.ndarray, beta: float, h: float = 0.0, J: float = 1.0,  N_try: int = 5) -> np.ndarray:
