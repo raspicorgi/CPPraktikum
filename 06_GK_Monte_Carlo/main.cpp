@@ -12,6 +12,6 @@ int main() {
         }
     }
 
-    saveConfiguration("final_config.txt");
+    saveConfiguration("output/final_config.txt");
     return 0;
 }
