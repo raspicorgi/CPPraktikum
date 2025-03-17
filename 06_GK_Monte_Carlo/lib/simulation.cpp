@@ -46,6 +46,14 @@ int getTotalRods() {
     return rods.size();
 }
 
+int getRodsWithOrientation(int s) {
+    int count = 0;
+    for (const Rod& rod : rods) {
+        if (rod.s == s) count++;
+    }
+    return count;
+}
+
 void saveConfiguration(const std::string& filename) {
     std::ofstream file(filename);
     for (const auto& rod : rods) {

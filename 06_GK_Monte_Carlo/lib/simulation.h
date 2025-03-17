@@ -8,4 +8,5 @@ extern std::vector<Rod> rods;
 void initializeSimulation();
 void performGCMCStep();
 int getTotalRods();
+int getRodsWithOrientation(int s);
 void saveConfiguration(const std::string& filename);

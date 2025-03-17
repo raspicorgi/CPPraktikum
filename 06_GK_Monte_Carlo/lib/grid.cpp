@@ -2,8 +2,8 @@
 #include "config.h"
 #include <vector>
 
-std::vector<std::vector<int>> grid(M, std::vector<int>(M, -1));
-std::vector<Rod> rods;
+std::vector<Rod> rods; // Beinhaltet die Koordinaten und Orientierung der Stäbchen
+std::vector<std::vector<int>> grid(M, std::vector<int>(M, -1)); // Beinhaltet den Index des Stäbchens, das die jeweilige Position belegt
 
 int periodic(int coord) {
     return (coord + M) % M;
