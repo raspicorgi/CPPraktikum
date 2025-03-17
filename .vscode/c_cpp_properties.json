@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/01_Nbody/lib"
+                "${workspaceFolder}/01_Nbody/lib",
+                "${workspaceFolder}/06_GK_Monte_Carlo/lib"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
