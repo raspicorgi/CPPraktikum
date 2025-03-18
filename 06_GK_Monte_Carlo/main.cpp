@@ -8,7 +8,7 @@
 // double mu = 0.84;
 
 int main() {
-    unsigned long num_steps = 4l * 10000l; //1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
+    unsigned long num_steps = 4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
     initializeSimulation();
 
     double activity = exp(beta * mu);
@@ -25,7 +25,7 @@ int main() {
                 // int vertical_rods = getRodsWithOrientation(-1);
                 appendRodCounts(i);
                 // double eta = L * total_rods / (double) (M * M); // Packungsdichte
-                // double S = (horizontal_rods - vertical_rods) / (double) total_rods; // Ordnungsparameter
+                // double S = (horizontal_rods - verticalRods) / (double) total_rods; // Ordnungsparameter
                 std::cout << "Step " << i << " (" << (i * 100.0 / num_steps) << "%): " <<std::endl;
                 // << getTotalRods() << " rods (" << getRodsWithOrientation(1) << " horizontal, " << getRodsWithOrientation(-1) << " vertical)"
                 // << "Eta = " << eta << ", S = " << S << std::endl;

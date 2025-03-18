@@ -55,5 +55,5 @@ void appendRodCounts(const unsigned long &step) {
         std::cerr << "Error: Output file is not open." << std::endl;
         return;
     }
-    outputFile << step << "," << getTotalRods() << "," << getRodsWithOrientation(1) << "," << getRodsWithOrientation(-1) << std::endl;
+    outputFile << step << "," << horizontalRods+verticalRods << "," << horizontalRods << "," << verticalRods << std::endl;
 }

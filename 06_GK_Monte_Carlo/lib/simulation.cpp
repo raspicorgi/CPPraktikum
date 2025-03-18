@@ -24,7 +24,7 @@ void performGCMCStep(const double &activity) {
         int s = (getRandom() < 0.5) ? 1 : -1;
 
         if (canInsertRod(x, y, s)) {
-            double acceptance = /*exp(beta * mu)*/ activity * (2 * M * M) / (rods.size() + 1);
+            double acceptance = activity * (2 * M * M) / (totalRods + 1);
             if (getRandom() < std::min(1.0, acceptance)) {
                 insertRod(x, y, s);
             }
@@ -32,19 +32,20 @@ void performGCMCStep(const double &activity) {
     } else {
         // Attempt deletion
         if (!rods.empty()) {
-            int index = getRandomInt(0, rods.size() - 1);
-            double acceptance = (rods.size() / (2.0 * M * M * /*exp(beta*mu)*/ activity));
+            int index = getRandomInt(0, totalRods - 1);
+            double acceptance = (totalRods / (2.0 * M * M * activity));
             if (getRandom() < std::min(1.0, acceptance)) {
                 removeRod(index);
             }
         }
     }
 }
-
+[[deprecated("Computationally inefficient. Use sum of variables horizontalRods+verticalRods instead.")]]
 int getTotalRods() {
     return rods.size();
 }
 
+[[deprecated("Computationally inefficient. Use horizontalRods or verticalRods instead.")]]
 int getRodsWithOrientation(int s) {
     int count = 0;
     for (const Rod& rod : rods) {

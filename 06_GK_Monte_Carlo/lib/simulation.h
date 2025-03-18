@@ -4,6 +4,11 @@
 #include <vector>
 
 extern std::vector<Rod> rods;
+extern int totalRods;
+extern int horizontalRods;
+extern int verticalRods;
+
+
 
 void initializeSimulation();
 void performGCMCStep(const double &activity);

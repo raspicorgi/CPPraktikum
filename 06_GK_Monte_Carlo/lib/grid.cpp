@@ -9,6 +9,10 @@ int periodic(int coord) {
     return (coord + M) % M;
 }
 
+int totalRods = 0;
+int horizontalRods = 0;
+int verticalRods = 0;
+
 void initializeGrid() {
     grid.assign(M, std::vector<int>(M, -1));
 }
@@ -31,6 +35,8 @@ void insertRod(int x, int y, int s) {
         int py = (s == -1) ? periodic(y + i) : periodic(y);
         grid[px][py] = index;
     }
+    (s == 1) ? horizontalRods++ : verticalRods++; // update rod counts
+    totalRods++;
 }
 
 void removeRod(int index) {
@@ -41,4 +47,6 @@ void removeRod(int index) {
         grid[px][py] = -1;
     }
     rods.erase(rods.begin() + index);
+    (rods[index].s == 1) ? horizontalRods-- : verticalRods--;
+    totalRods--;
 }
