@@ -6,4 +6,4 @@ const int L = 8; // Länge der Stäbchen
 const double beta = 1.0;
 const double mu = 0.84;
 
-const unsigned long save_freq = 100;  // How often we save the observables
+const unsigned long save_freq = 10000;  // How often we save the observables

@@ -8,10 +8,10 @@
 // double mu = 0.84;
 
 int main() {
-    unsigned long num_steps = 4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
+    unsigned long num_steps = 200 * pow(10, 6);//4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
     initializeSimulation();
 
-    double activity = exp(beta * mu);
+    double activity = 1.1; //exp(beta * mu);
 
     openOutputFile("output/orientations");
     writeHeader(num_steps, save_freq, beta, mu);

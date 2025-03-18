@@ -46,7 +46,7 @@ void removeRod(int index) {
         int py = (r.s == -1) ? periodic(r.y + i) : periodic(r.y);
         grid[px][py] = -1;
     }
-    rods.erase(rods.begin() + index);
     (rods[index].s == 1) ? horizontalRods-- : verticalRods--;
     totalRods--;
+    rods.erase(rods.begin() + index);
 }

@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Load the data
-df = pd.read_csv('06_GK_Monte_Carlo/output/orientations_1.csv', comment='#')
+df = pd.read_csv('06_GK_Monte_Carlo/output/orientations_16.csv', comment='#')
 
 # Plot the data
 plt.figure(figsize=(10, 6))
