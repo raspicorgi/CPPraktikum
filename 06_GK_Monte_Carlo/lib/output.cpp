@@ -46,8 +46,8 @@ void writeHeader(const unsigned long &steps, const unsigned long &save_freq, con
     outputFile << "# M: " << M << std::endl;
     outputFile << "# L: " << L << std::endl;
     outputFile << "# beta: " << beta << std::endl;
-    outputFile << "# mu: " << mu << std::endl << std::endl;
-    outputFile << "# Format: step,total_rods,horizontal_rods,vertical_rods" << std::endl;
+    outputFile << "# mu: " << mu << std::endl;
+    outputFile << "step,total_rods,horizontal_rods,vertical_rods" << std::endl;
 }
 
 void appendRodCounts(const unsigned long &step) {
