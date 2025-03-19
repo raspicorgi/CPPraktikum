@@ -14,14 +14,14 @@ rename_dict = {
     'total_rods': '# Gesamt',
     'horizontal_rods': '# Horizontal',
     'vertical_rods': '# Vertikal',
-    'eta': '$\eta$',
+    #'eta': '$\eta$'
     'S': 'S'
 }
-fig, axes = plt.subplots(len(files_and_titles), 5, figsize=(12, 2.5 * len(files_and_titles)))
+fig, axes = plt.subplots(len(files_and_titles), 4, figsize=(12, 2.5 * len(files_and_titles)))
 
 for row, (file, title) in enumerate(files_and_titles):
     df = pd.read_csv(file, comment='#')
-    columns = [col for col in df.columns if col != 'step']
+    columns = [col for col in df.columns if col in rename_dict]
 
     for ax, column in zip(axes[row], columns):
         ax.hist(df[column], bins=60, density=True)
