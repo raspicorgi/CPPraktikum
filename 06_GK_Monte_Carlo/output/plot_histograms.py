@@ -17,19 +17,18 @@ rename_dict = {
     'eta': '$\eta$',
     'S': 'S'
 }
+fig, axes = plt.subplots(len(files_and_titles), 5, figsize=(12, 2.5 * len(files_and_titles)))
 
-for file, title in files_and_titles:
+for row, (file, title) in enumerate(files_and_titles):
     df = pd.read_csv(file, comment='#')
-
-
-    fig, axes = plt.subplots(1, 5, figsize=(12, 3))
     columns = [col for col in df.columns if col != 'step']
 
-
-    for ax, column in zip(axes, columns):
+    for ax, column in zip(axes[row], columns):
         ax.hist(df[column], bins=60, density=True)
         ax.set_title(rename_dict[column], fontsize=14)
-    fig.suptitle(f'Histogramme für {title}')
-    plt.tight_layout()
-    plt.savefig(f'06_GK_Monte_Carlo/output/histograms_{title}.png')
-    plt.close()
+    axes[row, 0].set_ylabel(f'{title}', fontsize=16)
+
+fig.suptitle('Histogramme für verschiedene z-Werte', fontsize=16)
+plt.tight_layout(rect=[0, 0, 1, 0.95])
+plt.savefig('06_GK_Monte_Carlo/output/histograms_combined.png')
+plt.close()
