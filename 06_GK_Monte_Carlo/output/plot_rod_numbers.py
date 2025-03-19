@@ -5,9 +5,9 @@ matplotlib.rcParams.update({'font.size': 15})
 
 # Define the CSV files and corresponding titles
 files_and_titles = [
-    ('06_GK_Monte_Carlo/output/orientations_22.csv', 'Thermalisierung für $z = 0.56$'),
-    ('06_GK_Monte_Carlo/output/orientations_23.csv', 'Thermalisierung für $z = 0.84$'),
-    ('06_GK_Monte_Carlo/output/orientations_24.csv', 'Thermalisierung für $z = 1.1$')
+    ('06_GK_Monte_Carlo/output/observables_1.csv', 'Thermalisierung für $z = 0.56$'),
+    ('06_GK_Monte_Carlo/output/observables.csv', 'Thermalisierung für $z = 0.84$'),
+    ('06_GK_Monte_Carlo/output/observables_2.csv', 'Thermalisierung für $z = 1.1$')
 ]
 
 # Create subplots

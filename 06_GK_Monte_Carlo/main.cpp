@@ -8,7 +8,8 @@
 // double mu = 0.84;
 
 int main(int argc, char* argv[]) {
-    unsigned long num_steps = 1.5 * pow(10, 8);//4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
+    unsigned long thermalization_steps = 2 * pow(10, 7);
+    unsigned long num_steps = 4 * pow(10, 9); // Number of steps in Monte Carlo simulation
     initializeSimulation();
 
     double activity = 1.1; //exp(beta * mu);
@@ -25,14 +26,20 @@ int main(int argc, char* argv[]) {
     } else {
         std::cerr << "No activity argument provided. Using default value: " << activity << std::endl;
     }
-    openOutputFile("output/orientations");
-    writeHeader(num_steps, save_freq, activity);
+    openOutputFile("output/observables");
+    writeHeaderAllObservables(num_steps, save_freq, activity);
 
+    // thermalization
+    for (unsigned long i = 0; i < thermalization_steps; i++) {
+        performGCMCStep(activity);
+    }
+
+    // data collection
     try {
         for (unsigned long i = 0; i < num_steps; i++) {
             performGCMCStep(activity);
             if (i % save_freq == 0) {
-                appendRodCounts(i);
+                appendAllObservables(i);
             }
             if (i % print_freq == 0) {
                 std::cout << "Step " << i << " (" << (i * 100.0 / num_steps) << "%): " <<std::endl;
