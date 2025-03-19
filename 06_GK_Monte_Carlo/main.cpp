@@ -7,28 +7,35 @@
 // double beta = 1.0;
 // double mu = 0.84;
 
-int main() {
-    unsigned long num_steps = 200 * pow(10, 6);//4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
+int main(int argc, char* argv[]) {
+    unsigned long num_steps = 1.5 * pow(10, 8);//4l * 1000000000l;  // Number of Monte Carlo steps, equals to 4 * 10^9
     initializeSimulation();
 
     double activity = 1.1; //exp(beta * mu);
-
+    if (argc > 1) {
+        try {
+            activity = std::stod(argv[1]);
+        } catch (const std::invalid_argument& e) {
+            std::cerr << "Invalid activity argument. Please provide a valid number." << std::endl;
+            return 1;
+        } catch (const std::out_of_range& e) {
+            std::cerr << "Activity argument out of range. Please provide a smaller number." << std::endl;
+            return 1;
+        }
+    } else {
+        std::cerr << "No activity argument provided. Using default value: " << activity << std::endl;
+    }
     openOutputFile("output/orientations");
-    writeHeader(num_steps, save_freq, beta, mu);
+    writeHeader(num_steps, save_freq, activity);
 
     try {
         for (unsigned long i = 0; i < num_steps; i++) {
             performGCMCStep(activity);
             if (i % save_freq == 0) {
-                // int total_rods = getTotalRods();
-                // int horizontal_rods = getRodsWithOrientation(1);
-                // int vertical_rods = getRodsWithOrientation(-1);
                 appendRodCounts(i);
-                // double eta = L * total_rods / (double) (M * M); // Packungsdichte
-                // double S = (horizontal_rods - verticalRods) / (double) total_rods; // Ordnungsparameter
+            }
+            if (i % print_freq == 0) {
                 std::cout << "Step " << i << " (" << (i * 100.0 / num_steps) << "%): " <<std::endl;
-                // << getTotalRods() << " rods (" << getRodsWithOrientation(1) << " horizontal, " << getRodsWithOrientation(-1) << " vertical)"
-                // << "Eta = " << eta << ", S = " << S << std::endl;
             }
         }
     } catch (const std::exception& e) {

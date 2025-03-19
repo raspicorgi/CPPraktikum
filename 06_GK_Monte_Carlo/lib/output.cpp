@@ -36,7 +36,7 @@ void closeOutputFile() {
     }
 }
 
-void writeHeader(const unsigned long &steps, const unsigned long &save_freq, const double &beta, const double &mu) { 
+void writeHeader(const unsigned long &steps, const unsigned long &save_freq, const double &activity) { 
     if (!outputFile.is_open()) {
         std::cerr << "Error: Output file is not open." << std::endl;
         return;
@@ -45,8 +45,7 @@ void writeHeader(const unsigned long &steps, const unsigned long &save_freq, con
     outputFile << "# Save frequency: " << save_freq << std::endl;
     outputFile << "# M: " << M << std::endl;
     outputFile << "# L: " << L << std::endl;
-    outputFile << "# beta: " << beta << std::endl;
-    outputFile << "# mu: " << mu << std::endl;
+    outputFile << "# activity: " << activity << std::endl;
     outputFile << "step,total_rods,horizontal_rods,vertical_rods" << std::endl;
 }
 
