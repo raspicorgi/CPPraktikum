@@ -10,6 +10,7 @@
 #include "lib/Heun.hpp"
 #include <string>
 #include <cstring>
+#include <iomanip>
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::vector<Body> bodies;
@@ -42,18 +43,16 @@ void normalizeMasses(std::vector<Body>& bodies) {
 
 void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep, Integrator& integrator, const std::string& filename,const std::string& integratorName) {
     std::ofstream outputFile(filename); // create a new output file or overwrite an existing one
-    std::vector<Body> newBodies;
-    outputFile <<   "# column style format: id;time;x;y;z;vx;vy;vz;mass;totalSpecificAngularMomentum;rungeLenzVector;semiMajorAxis"
+    std::vector<Body> newBodies = bodies;
+    std::vector<Body> copy_bodies = bodies;
+    outputFile <<   "# column style format: id;time;x;y;z;vx;vy;vz;mass;totalEnergy;totalSpecificAngularMomentum;rungeLenzVector;semiMajorAxis"
                     "\n# this file will be overwritten without any precaution"
                     "\n# used integrator was " + integratorName + "\n";
   if (outputFile.is_open()) {
     // main loop
-    for (int i = 1; i <= iterations; i++) {
-        newBodies =integrator.integrate(bodies, maxTimeStep);
-        std::cout << "Iteration " << i << "/" << iterations << std::endl;
-        bodies = newBodies;
+    for (int i = 0; i <= iterations; i++) {
         for(Body current_body : newBodies){
-            outputFile << current_body.getId() << ";"
+            outputFile <<std::setprecision(17)<< current_body.getId() << ";"
                        << (maxTimeStep * i) << ";"
                        << current_body.getPosition().getX() << ";"
                        << current_body.getPosition().getY() << ";"
@@ -62,14 +61,18 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
                        << current_body.getVelocity().getY() << ";"
                        << current_body.getVelocity().getZ() << ";"
                        << current_body.getMass() << ";"
-                       << Tools::totalSpecificAngularMomentum(bodies).magnitude() << ";"
+                       << Tools::totalEnergy(copy_bodies) << ";"
+                       << Tools::totalSpecificAngularMomentum(copy_bodies) << ";"
                        << Tools::rungeLenzVector(current_body).magnitude() << ";"
-                       << Tools::semiMajorAxis(current_body) << ";"
+                       << Tools::semiMajorAxis(current_body)
                        << "\n";
         }
+        newBodies =integrator.integrate(copy_bodies, maxTimeStep);
+        std::cout << "Iteration " << i << "/" << iterations << std::endl;
+        copy_bodies = newBodies;
     }
     outputFile.close(); // close the file when done
-    std::cout << "Data was written to output.txt\n";
+    std::cout << "Data was written\n";
   }
   else {
     std::cerr << "Error opening file\n";
@@ -80,8 +83,10 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
 void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
     // calculate center of mass
     Vector3d centerOfMass;
+    long double totalMass = 0;
     for (const Body& body : bodies) {
         centerOfMass += body.getPosition() * body.getMass();
+        totalMass += body.getMass();
     }
     
 
@@ -105,21 +110,21 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
 
 
 int main(int argc, char *argv[]) {
-    if (argc < 3) {
-        std::cerr << "Please enter an integrator and the maximal time step in this order, example: ./name integrator maxTimeStep" << std::endl;
+    if (argc < 4) {
+        std::cerr << "Please enter an integrator and the maximal time step in this order, example: ./name integrator maxTimeStep Nbody" << std::endl;
         return 1;
     }
 
     
     std::string argument = argv[1];
-    
+    std::string nbody = argv[3];
     //prefs
     long double maxTimeStep = std::stold(argv[2]);
-    int iterations = 6.28/maxTimeStep;
+    int iterations = 200;
 
     //Load data
     std::cout << "Loading data... ";
-    std::vector<Body> bodies = loadBodiesFromFile("data/2body.txt");
+    std::vector<Body> bodies = loadBodiesFromFile("data/" + nbody +".txt");
     std::cout << "Data loaded." << std::endl;
     std::cout << "Normalizing masses... ";
     normalizeMasses(bodies);
@@ -136,24 +141,35 @@ int main(int argc, char *argv[]) {
     Iterierter_Hermite Iterierter_Hermite;
     Heun Heun;
     RK4 RK4;
+    if (argument == "all"){
+        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/"+ nbody + "_euler_" + std::to_string(maxTimeStep) +".txt","euler");
+       
+        simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/"+ nbody +"_euler_cromer_" + std::to_string(maxTimeStep) +".txt","euler_cromer");
+       
+        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet,"simulated_data/"+nbody+"_velocity_verlet_" + std::to_string(maxTimeStep) +".txt","velocity_verlet");
+        simulate(bodies, iterations, maxTimeStep, Hermite,"simulated_data/"+nbody+"_hermite_" + std::to_string(maxTimeStep) +".txt","hermite");
+        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite,"simulated_data/"+nbody+"_iterierter_hermite_" + std::to_string(maxTimeStep) +".txt","iterierter_hermite");
+        simulate(bodies, iterations, maxTimeStep, Heun,"simulated_data/"+nbody+"_heun_" + std::to_string(maxTimeStep) +".txt","heun");
+        simulate(bodies, iterations, maxTimeStep, RK4,"simulated_data/"+nbody+"_rk4_" + std::to_string(maxTimeStep) +".txt","rk4");
+    }
     if (argument == "euler") {
-        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/2b_euler_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/"+ nbody + "_euler_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "euler_cromer") {
-        simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/2b_euler_cromer_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/"+ nbody +"_euler_cromer_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "velocity_verlet") {
-        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet,"simulated_data/2b_velocity_verlet_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Velocity_Verlet,"simulated_data/"+nbody+"_velocity_verlet_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "hermite") {
-        simulate(bodies, iterations, maxTimeStep, Hermite,"simulated_data/2b_hermite_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Hermite,"simulated_data/"+nbody+"_hermite_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "iterierter_hermite") {
-        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite,"simulated_data/2b_iterierter_hermite_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite,"simulated_data/"+nbody+"_iterierter_hermite_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "heun") {
-        simulate(bodies, iterations, maxTimeStep, Heun,"simulated_data/2b_heun_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, Heun,"simulated_data/"+nbody+"_heun_" + std::to_string(maxTimeStep) +".txt",argument);
     } else if (argument == "rk4") {
-        simulate(bodies, iterations, maxTimeStep, RK4,"simulated_data/2b_rk4_" + std::to_string(maxTimeStep) +".txt",argument);
+        simulate(bodies, iterations, maxTimeStep, RK4,"simulated_data/"+nbody+"_rk4_" + std::to_string(maxTimeStep) +".txt",argument);
     } else {
         std::cerr << "Unknown integrator: " << argument << std::endl;
         return 1;
     }
-    std::cout << argv[2] <<"\n"<<std::endl;
+    std::cout << argv[2]  <<"\n"<<std::endl;
     return 0;
 }

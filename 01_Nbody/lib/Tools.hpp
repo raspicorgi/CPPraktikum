@@ -8,9 +8,10 @@ public:
     static Vector3d calc_acceleration(const std::vector<Body>& bodies, Body current_body);
     static Vector3d calc_jerk(const std::vector<Body>& bodies, Body current_body);
     static Vector3d specificAngularMomentum(const Body& body);
-    static Vector3d totalSpecificAngularMomentum(const std::vector<Body>& bodies);
+    static long double totalSpecificAngularMomentum(const std::vector<Body>& bodies);
     static Vector3d rungeLenzVector(const Body& body);
     static long double semiMajorAxis(const Body &body);
+    static long double totalEnergy(const std::vector<Body>& bodies);
 
 private:
     constexpr static long double G = 1;
