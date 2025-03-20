@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
     } else {
         std::cerr << "No activity argument provided. Using default value: " << activity << std::endl;
     }
-    openOutputFile("output/observables");
+    openOutputFile("output/observables" + std::to_string(activity));
     writeHeaderAllObservables(num_steps, save_freq, activity);
 
     // thermalization
