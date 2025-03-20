@@ -57,6 +57,6 @@ int main(int argc, char* argv[]) {
 
     closeOutputFile();
 
-    saveConfiguration("output/final_config.txt");
+    saveConfiguration(std::to_string(activity));
     return 0;
 }

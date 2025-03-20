@@ -54,10 +54,18 @@ int getRodsWithOrientation(int s) {
     return count;
 }
 
-void saveConfiguration(const std::string& filename) {
-    std::ofstream file(filename);
-    for (const auto& rod : rods) {
-        file << rod.x << " " << rod.y << " " << rod.s << "\n";
+void saveConfiguration(const std::string& filename_stem) {
+    std::string horizontal = filename_stem + "Waagerechte.dat";
+    std::string vertikal = filename_stem + "Senkrechte.dat";
+    std::ofstream fileHorizontal(horizontal);
+    std::ofstream fileVertical(vertikal);
+    for (const Rod& rod : rods) {
+        if(rod.s == 1) {
+            fileHorizontal << rod.x << " " << rod.y << "\n";
+        } else {
+            fileVertical << rod.x << " " << rod.y << "\n";
+        }
     }
-    file.close();
+    fileHorizontal.close();
+    fileVertical.close();
 }

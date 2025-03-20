@@ -31,10 +31,10 @@ for file, z in files_and_zs:
 
 fig = plt.figure(figsize=(8, 5))
 # plt.scatter(zs, means)
-plt.errorbar(etas, Ordnungsparameter, xerr=eta_stds, yerr=S_stds, fmt='o')
+plt.errorbar(etas, Ordnungsparameter, xerr=eta_stds, yerr=S_stds, fmt='o', capsize=5)
 plt.xlabel("Dichte $\eta$")
-plt.ylabel("Ordnungsparameter |S|")
-plt.title("Ordnungsparameter |S| in Abhängigkeit der Dichte")
+plt.ylabel("Ordnungsparameter $|S|$")
+plt.title("Ordnungsparameter $|S|$ in Abhängigkeit der Dichte")
 plt.grid()
 plt.savefig('06_GK_Monte_Carlo/output/ordnung_vs_dichte.png')
 plt.close()
