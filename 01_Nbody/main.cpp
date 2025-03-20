@@ -11,6 +11,7 @@
 #include <string>
 #include <cstring>
 #include <iomanip>
+#include <limits>
 
 std::vector<Body> loadBodiesFromFile(const std::string& filename) {
     std::vector<Body> bodies;
@@ -29,6 +30,11 @@ std::vector<Body> loadBodiesFromFile(const std::string& filename) {
 
     return bodies;
 }
+
+double nearly_zero_to_zero(double value) {
+    return (std::abs(value) < std::numeric_limits<double>::epsilon()) ? 0.0 : value;
+}
+
 
 void normalizeMasses(std::vector<Body>& bodies) {
     long double totalMass = 0;
@@ -51,6 +57,8 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
   if (outputFile.is_open()) {
     // main loop
     for (int i = 0; i <= iterations; i++) {
+        newBodies =integrator.integrate(copy_bodies, maxTimeStep);
+        copy_bodies = newBodies;
         for(Body current_body : newBodies){
             outputFile <<std::setprecision(17)<< current_body.getId() << ";"
                        << (maxTimeStep * i) << ";"
@@ -67,9 +75,8 @@ void simulate(std::vector<Body>& bodies, int iterations, long double maxTimeStep
                        << Tools::semiMajorAxis(current_body)
                        << "\n";
         }
-        newBodies =integrator.integrate(copy_bodies, maxTimeStep);
         std::cout << "Iteration " << i << "/" << iterations << std::endl;
-        copy_bodies = newBodies;
+       
     }
     outputFile.close(); // close the file when done
     std::cout << "Data was written\n";
@@ -87,12 +94,14 @@ void convertToCenterOfMassSystem(std::vector<Body>& bodies) {
     for (const Body& body : bodies) {
         centerOfMass += body.getPosition() * body.getMass();
         totalMass += body.getMass();
+        
     }
     
 
     // offset all bodies
     for (Body& body : bodies) {
         body.setPosition(body.getPosition() - centerOfMass);
+
     }
 
     // calculate velocity of COM
@@ -143,9 +152,7 @@ int main(int argc, char *argv[]) {
     RK4 RK4;
     if (argument == "all"){
         simulate(bodies, iterations, maxTimeStep, Euler,"simulated_data/"+ nbody + "_euler_" + std::to_string(maxTimeStep) +".txt","euler");
-       
         simulate(bodies, iterations, maxTimeStep, Euler_Cromer,"simulated_data/"+ nbody +"_euler_cromer_" + std::to_string(maxTimeStep) +".txt","euler_cromer");
-       
         simulate(bodies, iterations, maxTimeStep, Velocity_Verlet,"simulated_data/"+nbody+"_velocity_verlet_" + std::to_string(maxTimeStep) +".txt","velocity_verlet");
         simulate(bodies, iterations, maxTimeStep, Hermite,"simulated_data/"+nbody+"_hermite_" + std::to_string(maxTimeStep) +".txt","hermite");
         simulate(bodies, iterations, maxTimeStep, Iterierter_Hermite,"simulated_data/"+nbody+"_iterierter_hermite_" + std::to_string(maxTimeStep) +".txt","iterierter_hermite");
