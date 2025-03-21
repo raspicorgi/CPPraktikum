@@ -1,6 +1,6 @@
 #include "Functions.hpp"
 
-vector<double> Functions::advection(vector <double> psi, double N , double dt, double dx, vector <double> u, double t_max){
+vector<double> Functions::advection(vector<double> psi, double N , double dt, double dx, vector<double> u, double t_max){
     double t = 0.0;
     vector<double> psi_copy = psi;
     while(t <= t_max){
@@ -39,8 +39,7 @@ vector<double> Functions::advection(vector <double> psi, double N , double dt, d
     
 }
     
-
-double Functions::calc_delta_rho(vector <double> rho, double N, int j){
+double Functions::calc_delta_rho(vector<double> rho, double N, int j){
     double num = ((rho[j+1] - rho[j]) * (rho[j] - rho[j-1]));
     if( num > 0.0){
         if (std::abs(rho[j+1] - rho[j-1]) < 1e-10) {
@@ -55,7 +54,7 @@ double Functions::calc_delta_rho(vector <double> rho, double N, int j){
     }
 }
 
-double Functions::calc_delta_u(vector <double> u, double N, int j){
+double Functions::calc_delta_u(vector<double> u, double N, int j){
     double num = ((u[j+1] - u[j]) * (u[j] - u[j-1]));
     if(num > 0.0){
         double delta_u = 2.0 * num/(u[j+1] - u[j-1]) + 1e-10;
@@ -66,7 +65,7 @@ double Functions::calc_delta_u(vector <double> u, double N, int j){
     }
 }
 
-double Functions::calc_delta_epsilon(vector <double> epsilon, double N, int j){
+double Functions::calc_delta_epsilon(vector<double> epsilon, double N, int j){
     double num = ((epsilon[j+1] - epsilon[j]) * (epsilon[j] - epsilon[j-1]));
     if(num > 0.0){
         double delta_epsilon = 2.0 * num/(epsilon[j+1] - epsilon[j-1]) + 1e-10;
@@ -77,7 +76,7 @@ double Functions::calc_delta_epsilon(vector <double> epsilon, double N, int j){
     }
 }
 
-vector<double> Functions::rho_advection(vector <double> rho, double N , double dt, double dx, vector <double> u){
+vector<double> Functions::rho_advection(vector<double> rho, double N , double dt, double dx, vector <double> u){
     vector <double> rho_adv(N+4,0.0);
     for(double j = 2; j <= N+2; j++){
         if(u[j] > 0.0){
@@ -92,7 +91,7 @@ vector<double> Functions::rho_advection(vector <double> rho, double N , double d
     return rho_adv;
 }
 
-vector<double> Functions::u_advection(vector <double> u, double N , double dt, double dx){
+vector<double> Functions::u_advection(vector<double> u, double N , double dt, double dx){
     vector <double> u_adv(N+4,0.0);
     for(double j = 2; j <= N+2; j++){
         double u_mittel = 0.5* (u[j] + u[j+1]);
@@ -108,7 +107,7 @@ vector<double> Functions::u_advection(vector <double> u, double N , double dt, d
     return u_adv;
 }
 
-vector<double> Functions::epsilon_advection(vector <double> epsilon, double N , double dt, double dx, vector <double> u){
+vector<double> Functions::epsilon_advection(vector<double> epsilon, double N , double dt, double dx, vector <double> u){
     vector <double> epsilon_adv(N+4,0.0);
     for(double j = 2; j <= N+2; j++){
         if(u[j] > 0.0){
@@ -123,11 +122,11 @@ vector<double> Functions::epsilon_advection(vector <double> epsilon, double N , 
     return epsilon_adv;
 }
 
-static vector<vector<double>> calc_F(vector <double> rho, vector <double> u, vector <double> epsilon, double N, double dt, double dx){
+vector<vector<double>> Functions::calc_F(vector<double> rho, vector<double> u, vector<double> epsilon, double N, double dt, double dx){
     vector<double> F_m(N+4,0.0);
     vector<double> F_I(N+4,0.0);
     vector<double> F_e(N+4,0.0);
-    vector<vector<double>> F(3);
+    vector<vector<double>> F;
     vector<double> rho_adv = Functions::rho_advection(rho, N, dt, dx, u);
     vector<double> u_adv = Functions::u_advection(u, N, dt, dx);
     vector<double> epsilon_adv = Functions::epsilon_advection(epsilon, N, dt, dx, u);
@@ -135,19 +134,19 @@ static vector<vector<double>> calc_F(vector <double> rho, vector <double> u, vec
        F_m[j] = rho_adv[j] * u[j];
        F_e[j] = F_m[j] * epsilon_adv[j];
     }
-    for(double j = 2; j <= N+1; j++){
+    for(double j = 2; j <= N+2; j++){
         F_I[j] = 0.5 * (F_m[j] + F_m[j+1]) * u_adv[j];
      }
-    F[0] = F_m;
-    F[1] = F_I;
-    F[2] = F_e;
+    F.push_back(F_m);
+    F.push_back(F_I);
+    F.push_back(F_e);
     return F;
 }
 
-static vector<vector<double>> solve_shocktube(vector <double> rho, vector <double> u, vector <double> epsilon, vector<double> p, double N, double dt, double dx, double t_max, double gamma){
+vector<vector<double>> Functions::solve_shocktube(vector<double> rho, vector<double> u, vector<double> epsilon, vector<double> p, double N, double dt, double dx, double t_max, double gamma){
     double t = 0.0;
-    vector<vector<double>> result(4);
-    vector<double> sigma_vec(0.0);
+    vector<vector<double>> result;
+    vector<double> sigma_vec;
     while (t < t_max){
         vector<double> rho_mean(N+4,0.0);
         vector<double> rho_mean_new(N+5,0.0);
@@ -160,7 +159,7 @@ static vector<vector<double>> solve_shocktube(vector <double> rho, vector <doubl
         // mit Berücksichtigung der Schallgeschwindigkeit
        
         vector<double> counter(N+4,0.0);
-        for(int j = 0; j <= N+4; j++){
+        for(int j = 0; j < N+4; j++){
             counter[j] = sqrt(gamma * p[j] / rho[j]);
             double counter_max =  *std::max_element(counter.begin(), counter.end());
             auto u_minmax = std::minmax_element(u.begin(), u.end());
@@ -175,7 +174,7 @@ static vector<vector<double>> solve_shocktube(vector <double> rho, vector <doubl
             double sigma = c_max * dt/dx;
             sigma_vec.push_back(sigma);
         }
-
+       
         // Berechnung der Flüsse
         vector<vector<double>> F = calc_F(rho, u, epsilon, N, dt, dx);
         // F = [F_m, F_I, F_e]
@@ -193,16 +192,22 @@ static vector<vector<double>> solve_shocktube(vector <double> rho, vector <doubl
         }
 
         // Reflektierende Randbedingungen
-        u_new[2], u_new[1] = 0, -u_new[3];
-        u_new[N+2], u_new[N+3] = 0, -u_new[N+1];
-        rho_new[1], rho_new[0] = rho_new[2], rho_new[3];
-        rho_new[N+2], rho_new[N+3] = rho_new[N+1], rho_new[N];
-        epsilon_new[1], epsilon_new[0] = epsilon_new[2], epsilon_new[3];
-        epsilon_new[N+2], epsilon_new[N+3] = epsilon_new[N+1], epsilon_new[N];
+        u_new[2] = 0;
+        u_new[1] = -u_new[3];
+        u_new[N+2] = 0;
+        u_new[N+3] = -u_new[N+1];
+        rho_new[1] = rho_new[2];
+        rho_new[0] = rho_new[3];
+        rho_new[N+2] = rho_new[N+1];
+        rho_new[N+3] = rho_new[N];
+        epsilon_new[1] = epsilon_new[2];
+        epsilon_new[0] = epsilon_new[3];
+        epsilon_new[N+2] = epsilon_new[N+1];
+        epsilon_new[N+3] = epsilon_new[N];
 
         // Druckarbeit
 
-        for(int j = 0; j <= N+4; j++){
+        for(int j = 0; j < N+4; j++){
             p_new[j] = (gamma - 1) * rho_new[j] * epsilon_new[j];
         }
         vector<double> utmp = u_new;
@@ -218,13 +223,12 @@ static vector<vector<double>> solve_shocktube(vector <double> rho, vector <doubl
         p = p_new;
         t += dt;
     }
-    vector<double> sigma_max_vec (1,*std::max_element(sigma_vec.begin(), sigma_vec.end()));
-
-    result[0] = rho;
-    result[1] = u;
-    result[2] = epsilon;
-    result[3] = p;
-    result[4] = sigma_max_vec;
+    vector<double> sigma_max_vec = {*std::max_element(sigma_vec.begin(), sigma_vec.end())};
+    result.push_back(rho);
+    result.push_back(u);
+    result.push_back(epsilon);
+    result.push_back(p);
+    result.push_back(sigma_max_vec);
     return result;
 }
 
