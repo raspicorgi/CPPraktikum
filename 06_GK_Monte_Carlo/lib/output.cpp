@@ -3,19 +3,20 @@
 #include "simulation.h"
 #include "config.h"
 #include <experimental/filesystem>
-
-extern std::vector<Rod> rods;
-
 #include <fstream>
-
-std::ofstream outputFile;
-
 #include <filesystem>
 
+
+extern std::vector<Rod> rods;
+std::ofstream outputFile;
+
+
+// Öffnen und Schließen der Ausgabedatei ist ausgelagert, um Performance zu sparen
 void openOutputFile(const std::string& filename) {
     std::string newFilename = filename;
     int index = 1;
 
+    // Nicht überschreiben, sondern neuen Dateinamen generieren
     while (std::filesystem::exists(newFilename + ".csv")) {
         newFilename = filename + "_" + std::to_string(index);
         index++;
@@ -36,6 +37,7 @@ void closeOutputFile() {
     }
 }
 
+// Kommentar am Anfang der Datei schreiben (für nur Stäbchenausrichtungen)
 void writeHeader(const unsigned long &steps, const unsigned long &save_freq, const double &activity) { 
     if (!outputFile.is_open()) {
         std::cerr << "Error: Output file is not open." << std::endl;
@@ -49,6 +51,7 @@ void writeHeader(const unsigned long &steps, const unsigned long &save_freq, con
     outputFile << "step,total_rods,horizontal_rods,vertical_rods" << std::endl;
 }
 
+// Kommentar am Anfang der Datei schreiben (für alle Observablen)
 void writeHeaderAllObservables(const unsigned long &steps, const unsigned long &save_freq, const double &activity){
     if (!outputFile.is_open()) {
         std::cerr << "Error: Output file is not open." << std::endl;
@@ -63,6 +66,7 @@ void writeHeaderAllObservables(const unsigned long &steps, const unsigned long &
 
 }
 
+// Stäbchenzahlen in Datei schreiben
 void appendRodCounts(const unsigned long &step) {
     if (!outputFile.is_open()) {
         std::cerr << "Error: Output file is not open." << std::endl;
@@ -71,6 +75,7 @@ void appendRodCounts(const unsigned long &step) {
     outputFile << step << "," << horizontalRods+verticalRods << "," << horizontalRods << "," << verticalRods << std::endl;
 }
 
+// Alle Observablen in Datei schreiben
 void appendAllObservables(const unsigned long &step) {
     if (!outputFile.is_open()) {
         std::cerr << "Error: Output file is not open." << std::endl;

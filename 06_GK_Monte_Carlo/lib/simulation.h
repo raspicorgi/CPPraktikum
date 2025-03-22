@@ -12,6 +12,4 @@ extern int verticalRods;
 
 void initializeSimulation();
 void performGCMCStep(const double &activity);
-int getTotalRods();
-int getRodsWithOrientation(int s);
 void saveConfiguration(const std::string& filename);

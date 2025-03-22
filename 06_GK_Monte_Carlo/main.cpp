@@ -8,33 +8,35 @@
 // double mu = 0.84;
 
 int main(int argc, char* argv[]) {
-    unsigned long thermalization_steps = 2 * pow(10, 7);
-    unsigned long num_steps = 4 * pow(10, 9); // Number of steps in Monte Carlo simulation
+    unsigned long thermalization_steps = 2 * pow(10, 7); // Anzahl Schritte zur Thermalisierung
+    unsigned long num_steps = 4 * pow(10, 9); // Anzahl simulierter Schritte
     initializeSimulation();
 
-    double activity = 1.1; //exp(beta * mu);
+    double activity = 1.1; // Gleich zu exp(beta * mu)
     if (argc > 1) {
         try {
             activity = std::stod(argv[1]);
         } catch (const std::invalid_argument& e) {
-            std::cerr << "Invalid activity argument. Please provide a valid number." << std::endl;
+            std::cerr << "Ungültiges Aktivitätsargument. Bitte geben Sie eine gültige Zahl ein." << std::endl;
             return 1;
         } catch (const std::out_of_range& e) {
-            std::cerr << "Activity argument out of range. Please provide a smaller number." << std::endl;
+            std::cerr << "Aktivitätsargument außerhalb des Bereichs. Bitte geben Sie eine kleinere Zahl ein." << std::endl;
             return 1;
         }
     } else {
-        std::cerr << "No activity argument provided. Using default value: " << activity << std::endl;
+        std::cerr << "Kein Aktivitätsargument angegeben. Standardwert wird verwendet: " << activity << std::endl;
     }
+    
+
     openOutputFile("output/observables" + std::to_string(activity));
     writeHeaderAllObservables(num_steps, save_freq, activity);
 
-    // thermalization
+    // Thermalisieren
     for (unsigned long i = 0; i < thermalization_steps; i++) {
         performGCMCStep(activity);
     }
 
-    // data collection
+    // Simulieren und Daten aufzeichnen
     try {
         for (unsigned long i = 0; i < num_steps; i++) {
             performGCMCStep(activity);
@@ -46,17 +48,18 @@ int main(int argc, char* argv[]) {
             }
         }
     } catch (const std::exception& e) {
-        std::cerr << "An error occurred: " << e.what() << std::endl;
+        std::cerr << "Fehler: " << e.what() << std::endl;
         closeOutputFile();
-        throw; // Re-throw the exception after cleanup
+        throw;
     } catch (...) {
-        std::cerr << "An unknown error occurred." << std::endl;
+        std::cerr << "Unbekannter Fehler." << std::endl;
         closeOutputFile();
-        throw; // Re-throw the exception after cleanup
+        throw;
     }
 
     closeOutputFile();
 
+    // Konfiguration nach Simulation speichern
     saveConfiguration(std::to_string(activity));
     return 0;
 }

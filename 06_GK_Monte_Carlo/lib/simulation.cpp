@@ -15,10 +15,11 @@ void initializeSimulation() {
     initializeGrid();
 }
 
+
 void performGCMCStep(const double &activity) {
     double r = getRandom();
     if (r < 0.5) {
-        // Attempt insertion
+        // Einsetzen
         int x = getRandomInt(0, M - 1);
         int y = getRandomInt(0, M - 1);
         int s = (getRandom() < 0.5) ? 1 : -1;
@@ -30,7 +31,7 @@ void performGCMCStep(const double &activity) {
             }
         }
     } else {
-        // Attempt deletion
+        // Entfernen
         if (!rods.empty()) {
             int index = getRandomInt(0, totalRods - 1);
             double acceptance = (totalRods / (2.0 * M * M * activity));
@@ -40,20 +41,9 @@ void performGCMCStep(const double &activity) {
         }
     }
 }
-[[deprecated("Computationally inefficient. Use sum of variables horizontalRods+verticalRods instead.")]]
-int getTotalRods() {
-    return rods.size();
-}
 
-[[deprecated("Computationally inefficient. Use horizontalRods or verticalRods instead.")]]
-int getRodsWithOrientation(int s) {
-    int count = 0;
-    for (const Rod& rod : rods) {
-        if (rod.s == s) count++;
-    }
-    return count;
-}
 
+// Konfiguration in Format speichern, dass von bereitgestelltem Python-Skript gelesen werden kann
 void saveConfiguration(const std::string& filename_stem) {
     std::string horizontal = filename_stem + "Waagerechte.dat";
     std::string vertikal = filename_stem + "Senkrechte.dat";

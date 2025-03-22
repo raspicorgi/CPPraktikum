@@ -16,7 +16,7 @@ int verticalRods = 0;
 void initializeGrid() {
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < M; j++) {
-            grid[i][j] = -1;
+            grid[i][j] = -1; // Leere Gitterplätze sind -1. Besetzte sind der Index in rods.
         }
     }
 }
