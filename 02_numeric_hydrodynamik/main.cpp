@@ -150,7 +150,7 @@ vector<vector<double>> result = Functions::solve_shocktube(rho, u, epsilon, p, N
 // result = [rho, u, epsilon, p, sigma_max_vec]
 vector<double> temp(N+4);
 for(int j = 0; j < N+4; j++){
-    temp[j] = result[0][j] * (gamma -1);
+    temp[j] = result[2][j] * (gamma -1);
 }
 write_to_file(result[0], "output_a2/rho_t"+ double_to_string(t_max)+"s_N"+double_to_string(N)+"_dt"+double_to_string(dt) +".txt");
 write_to_file(result[1], "output_a2/u_t"+ double_to_string(t_max)+"s_N"+double_to_string(N)+"_dt"+double_to_string(dt) +".txt");
