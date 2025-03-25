@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from typing import Union
-from tqdm import tqdm
 from numba import jit
+
+# --- benötigt für Aufgabe 3 ---
 
 @jit(nopython=True)
 def phi_prime(x):
@@ -79,5 +79,12 @@ def rho_solver(N: int, L: int, eta: float,  thresh: float, max_steps: int, alpha
 
     return rho
 
+# --- benötigt für Aufgabe 5 ---
+@jit(nopython=True)
+def surface_tension_analytical(L: int, rho_0: float, beta: float = 1.0):
+    return 1/(2*beta) * ((L-1)*np.log(1-L*rho_0) - L*np.log(1-(L-1)*rho_0))
 
 
+def surface_tension_numerical(L: int, rho: np.ndarray, beta: float = 1.0):
+    # Berechne die Oberflächenspannung numerisch
+    pass

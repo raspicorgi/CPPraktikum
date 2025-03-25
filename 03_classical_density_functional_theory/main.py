@@ -31,5 +31,5 @@ plt.tight_layout()
 plt.show()
 
 
-output_path = os.path.join(os.path.dirname(__file__), "rho_data.csv")
+output_path = os.path.join(os.path.dirname(__file__), "outputs",  "rho_data.csv")
 df.to_csv(output_path, index=False)
