@@ -81,10 +81,54 @@ def rho_solver(N: int, L: int, eta: float,  thresh: float, max_steps: int, alpha
 
 # --- benötigt für Aufgabe 5 ---
 @jit(nopython=True)
-def surface_tension_analytical(L: int, rho_0: float, beta: float = 1.0):
+def phi(x):
+    return x + (1-x) * np.log(1-x)
+
+@jit(nopython=True)
+def surface_tension_analytical(rho: np.ndarray, L: int, beta: float = 1.0):
+    rho_0 = rho[rho.shape[0]//2]
     return 1/(2*beta) * ((L-1)*np.log(1-L*rho_0) - L*np.log(1-(L-1)*rho_0))
 
+@jit(nopython=True)
+def mu_total(rho, L, beta=1.0):
+    return  np.log(rho) + mu_ex_homog(rho, L, beta)
 
-def surface_tension_numerical(L: int, rho: np.ndarray, beta: float = 1.0):
-    # Berechne die Oberflächenspannung numerisch
-    pass
+@jit(nopython=True)
+def free_energy(rho: np.ndarray, L: int, beta: float=1.0):
+    N = len(rho)
+    rho_middle = rho[L:N-L]
+    
+    F_ex = 0
+    for s in range(N):
+        F_ex += phi(n1(s, L, rho)) - phi(n0(s, L, rho))
+
+    return 1/beta * (np.sum(rho_middle * (np.log(rho_middle)-1)) + F_ex) # first summand is F_id
+
+@jit(nopython=True)
+def GC_pot(rho: np.ndarray, L: int, beta: float=1.0):
+    N  = len(rho)
+    rho_center = rho[N//2]
+    mu = mu_total(rho_center, L, beta)
+    F = free_energy(rho, L, beta)
+    return F - np.sum(mu * rho)
+
+@jit(nopython=True)
+def pressure(rho_0: float, L: int, beta: float=1.0):
+    return 1/beta * (np.log(1-(L-1)*rho_0) - np.log(1-L*rho_0))
+
+
+@jit(nopython=True)
+def surface_tension_numerical(rho:np.ndarray, L: int, beta: float = 1.0):
+    N = len(rho)
+    rho_0 = rho[N//2]
+
+    GC_pot_homog = -pressure(rho_0, L, beta) * ((N-L)-L) # Anzahl der Gitterpunkte zwischen der Wände
+
+    return 0.5 * (GC_pot(rho, L, beta) - GC_pot_homog)
+
+@jit(nopython=True)
+def excess_adsorption(rho: np.ndarray, L: int):
+    N = len(rho)
+    rho_0 = rho[N//2]
+    rho_middle = rho[L:N-L]
+    return 0.5*np.sum(rho_middle - rho_0)
