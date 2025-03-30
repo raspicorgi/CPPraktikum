@@ -1,0 +1,5 @@
+ The best solution found:                                                                           
+ [1.14920004 9.99595039]
+
+ Objective function:
+ 1383.339680518136
