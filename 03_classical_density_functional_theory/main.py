@@ -25,7 +25,10 @@ for i, L in enumerate(Ls):
         rho = dft.rho_solver(N, L, eta_0, threshold, max_steps, alpha)
         df.loc[len(df)] = [L, eta_0, rho]
         # only plot left wall
-        ax.plot(range(L-1, N//50 + L-1), rho[(L-1):(N//50 + L-1)], label=f"eta0={eta_0}")
+        if L == 3:
+            ax.plot(range(L-1, N//50 + L-1), rho[(L-1):(N//50 + L-1)], label=f"eta0={eta_0}")
+        else:
+            ax.plot(range(L-1, N//10 + L-1), rho[(L-1):(N//10 + L-1)], label=f"eta0={eta_0}")
     ax.set_title(f"L = {L}")
     ax.set_xlabel("s")
     ax.set_ylabel("rho")
@@ -79,8 +82,8 @@ for i, L in enumerate(Ls):
     ax.plot(group["eta_0"], group["exc_abs"], label="aus Gleichung (2.23)")
     ax.plot(group["eta_0"], group["Gamma_from_dgamma"], label="aus Gradienten")
     ax.legend()
-    ax.set_xlabel("$\eta_0$")
-    ax.set_ylabel("$\Gamma$")
+    ax.set_xlabel(r"$\eta_0$")
+    ax.set_ylabel(r"$\Gamma$")
     ax.set_title(f"L = {L}")
 
 plt.tight_layout()
