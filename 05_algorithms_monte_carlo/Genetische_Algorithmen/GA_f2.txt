@@ -1,0 +1,5 @@
+The best solution found:                                                                           
+[0.49999262 0.49999984]
+
+Objective function:
+-0.7999999995157804
